@@ -45,11 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46784785d09e6874a8f12b34495a9090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_grip: 3
-  m_cohesionDistance: 5
-  m_cohesionForce: 3
-  m_seperationDistance: 2
-  m_seperationForce: 10
+  m_maxSpeed: 10
+  m_grip: 1
+  m_cohesionDistance: 15
+  m_cohesionForce: 39.25
+  m_seperationDistance: 3
+  m_seperationForce: 112.4
 --- !u!65 &8369595447047703484
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using Joeri.Tools.Debugging;
 
 namespace Joeri.Tools.Movement
 {
-    public class Cohesion : Behavior
+    public class Separation : Behavior
     {
         private readonly IBoid m_boid = null;
         private readonly IFlock m_flock = null;
@@ -11,7 +11,7 @@ namespace Joeri.Tools.Movement
         private readonly float m_sqrRadius = 0;
         private readonly float m_force = 0;
 
-        public Cohesion(float _radius, float _force, IBoid _boid, IFlock _flock)
+        public Separation(float _radius, float _force, IBoid _boid, IFlock _flock)
         {
             m_boid = _boid;
             m_flock = _flock;
@@ -42,14 +42,14 @@ namespace Joeri.Tools.Movement
                 boidsInRange++;
             }
 
-            //  Calculate desired velocity towards the average of all nearby boids.
+            //  Calculate desired velocity away from the average of all nearby boids.
             totalPositions /= boidsInRange;
-            return (totalPositions - context.position).normalized * m_force;
+            return (context.position - totalPositions).normalized * m_force;
         }
 
         public override void DrawGizmos(Vector3 position)
         {
-            GizmoTools.DrawSphere(position, m_radius, Color.white, 0.5f, true, 0.25f);
+            GizmoTools.DrawSphere(position, m_radius, Color.red, 0.5f, true, 0.25f);
         }
     }
 }

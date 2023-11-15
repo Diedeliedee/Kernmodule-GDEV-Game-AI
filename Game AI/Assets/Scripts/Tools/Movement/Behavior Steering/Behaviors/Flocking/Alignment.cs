@@ -3,21 +3,17 @@ using Joeri.Tools.Debugging;
 
 namespace Joeri.Tools.Movement
 {
-    public class Cohesion : Behavior
+    public class Alignment : Behavior
     {
         private readonly IBoid m_boid = null;
         private readonly IFlock m_flock = null;
-        private readonly float m_radius = 0;
         private readonly float m_sqrRadius = 0;
-        private readonly float m_force = 0;
 
-        public Cohesion(float _radius, float _force, IBoid _boid, IFlock _flock)
+        public Alignment(float _radius, IBoid _boid, IFlock _flock)
         {
             m_boid = _boid;
             m_flock = _flock;
-            m_radius = _radius;
             m_sqrRadius = _radius * _radius;
-            m_force = _force;
         }
 
         public override Vector3 GetDesiredVelocity(Context context)
@@ -29,7 +25,7 @@ namespace Joeri.Tools.Movement
             if (peerBoids.Count <= 0) return Vector3.zero;
 
             //  Variables for caching.
-            var totalPositions = Vector3.zero;
+            var totalVelocity = Vector3.zero;
             var boidsInRange = 0;
 
             for (int i = 0; i < peerBoids.Count; i++)
@@ -38,18 +34,12 @@ namespace Joeri.Tools.Movement
                 if ((peerBoids[i].position - context.position).sqrMagnitude > m_sqrRadius) continue;
 
                 //  Add the position of the boid to be used in the average equation.
-                totalPositions += peerBoids[i].position;
+                totalVelocity += peerBoids[i].velocity;
                 boidsInRange++;
             }
 
-            //  Calculate desired velocity towards the average of all nearby boids.
-            totalPositions /= boidsInRange;
-            return (totalPositions - context.position).normalized * m_force;
-        }
-
-        public override void DrawGizmos(Vector3 position)
-        {
-            GizmoTools.DrawSphere(position, m_radius, Color.white, 0.5f, true, 0.25f);
+            //  Calculate and return the average velocity of all nearby boids.
+           return totalVelocity /= boidsInRange;
         }
     }
 }

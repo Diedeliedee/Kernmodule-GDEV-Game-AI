@@ -4,9 +4,10 @@ using UnityEngine;
 using Joeri.Tools.Movement;
 using Joeri.Tools.Debugging;
 
-public class Boid : MonoBehaviour
+public class Boid : MonoBehaviour, IBoid
 {
     [Header("Properties:")]
+    [SerializeField] private float m_maxSpeed = 10;
     [SerializeField] private float m_grip = 3;
     [Space]
     [SerializeField] private float m_cohesionDistance = 3;
@@ -20,53 +21,30 @@ public class Boid : MonoBehaviour
     private BehaviorHandler m_behaviorHandler = new BehaviorHandler();
 
     //  Reference:
-    private BoidSchool m_parentSchool = null;
+    private Flock m_flock = null;
 
-    public void Setup(BoidSchool _school)
+    public Vector3 position => transform.position;
+    public Vector3 velocity => m_movement.velocity;
+
+    public void Setup(Flock _flock)
     {
-
-        m_parentSchool = _school;
+        m_flock = _flock;
+        m_behaviorHandler.SetBehaviors(
+            new Cohesion(m_cohesionDistance, m_cohesionForce, this, m_flock),
+            new Separation(m_seperationDistance, m_seperationForce, this, m_flock),
+            new Alignment(m_cohesionDistance, this, m_flock));
     }
 
     public void Tick(float _deltaTime)
     {
-        var boids = m_parentSchool.GetBoids(this);
-        var desiredVelocity = Vector3.zero;
+        var context = new Behavior.Context(_deltaTime, m_maxSpeed, position, velocity);
 
-        Isolate(boids, m_cohesionDistance);
-        foreach (var boid in boids)
-        {
-            desiredVelocity += Vector3.ClampMagnitude((boid.transform.position - transform.position).normalized * m_cohesionForce, m_cohesionForce);
-        }
-
-        Isolate(boids, m_seperationDistance);
-        foreach (var boid in boids)
-        {
-            desiredVelocity += Vector3.ClampMagnitude((transform.position - boid.transform.position).normalized * m_seperationForce, m_seperationForce);
-        }
-
-        transform.position += m_movement.CalculateVelocity(desiredVelocity, m_grip, _deltaTime) * _deltaTime;
-    }
-
-    private void Isolate(List<Boid> boids, float radius)
-    {
-        //  Square the radius, so we avoid using a square root function in the distance calculation.
-        radius = radius * radius;
-
-        //  Remove any boids out of the desired radius of this boid.
-        for (int i = 0; i < boids.Count; i++)
-        {
-            if ((boids[i].transform.position - transform.position).sqrMagnitude > radius)
-            {
-                boids.Remove(boids[i]);
-                i--;
-            }
-        }
+        transform.position += m_movement.CalculateVelocity(m_behaviorHandler.GetDesiredVelocity(context), m_grip, _deltaTime) * _deltaTime;
     }
 
     public void DrawGizmos()
     {
-        GizmoTools.DrawSphere(transform.position, m_cohesionDistance, Color.white, 0.5f, true, 0.25f);
-        GizmoTools.DrawSphere(transform.position, m_seperationDistance, Color.red, 0.5f, true, 0.25f);
+        m_behaviorHandler.DrawGizmos(transform.position);
+        m_movement.Draw(transform.position, Color.black, Color.green, 0.25f);
     }
 }
