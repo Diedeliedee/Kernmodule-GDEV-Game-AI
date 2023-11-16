@@ -16,6 +16,7 @@ namespace Joeri.Tools.Gameify
         //  Properties:
         public int health       { get => m_health; }
         public int maxHealth    { get => m_maxHealth; }
+        public float percentage { get => (float)m_health / m_maxHealth; }
     
         public int SetMaxHealth(int maxHealth, bool heal)
         {

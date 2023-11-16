@@ -66,6 +66,13 @@ namespace Joeri.Tools.Utilities
             return false;
         }
 
+        /// <returns>True if the passed in list is null, or has nothing in it.</returns>
+        public static bool IsUnusableList<T>(List<T> list)
+        {
+            if (list == null || list.Count == 0) return true;
+            return false;
+        }
+
         /// <returns>The result of a random number lower than, or equal to the given probability value.</returns>
         public static bool RandomChance(float probability)
         {
