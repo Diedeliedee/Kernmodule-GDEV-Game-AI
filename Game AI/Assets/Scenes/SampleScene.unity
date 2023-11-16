@@ -408,8 +408,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_boid: {fileID: 2524643152080387150, guid: baf003a8fb3953745b0710a022b4804b, type: 3}
-  m_boidAmount: 10
-  m_spawnRadius: 15
+  m_boidAmount: 50
+  m_spawnRadius: 150
 --- !u!4 &671671500
 Transform:
   m_ObjectHideFlags: 0

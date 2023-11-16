@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Joeri.Tools.Movement;
+using Joeri.Tools.AI.Steering;
 using Joeri.Tools.Utilities;
+using Joeri.Tools.Debugging;
 
 public class Flock : MonoBehaviour, IFlock
 {
@@ -12,6 +13,8 @@ public class Flock : MonoBehaviour, IFlock
     [SerializeField] private float m_spawnRadius = 5f;
 
     private Dictionary<int, Boid> m_boids = new Dictionary<int, Boid>();
+
+    public float areaRadius => m_spawnRadius;
 
     private void Start()
     {
@@ -55,5 +58,6 @@ public class Flock : MonoBehaviour, IFlock
     private void OnDrawGizmos()
     {
         foreach (var pair in m_boids) pair.Value.DrawGizmos();
+        GizmoTools.DrawSphere(transform.position, m_spawnRadius, Color.white, 0.1f, true, 0.25f);
     }
 }
