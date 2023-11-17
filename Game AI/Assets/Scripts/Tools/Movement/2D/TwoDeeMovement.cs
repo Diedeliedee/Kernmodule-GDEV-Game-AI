@@ -10,7 +10,7 @@ namespace Joeri.Tools.Movement.TwoDee
 {
     public class TwoDeeMovement : BaseHandler
     {
-        protected Accel.Singular m_horizontal = new Accel.Singular();
+        protected Accel.Mono m_horizontal = new Accel.Mono();
 
         //  Reference:
         protected Transform m_transform = null;

@@ -5,7 +5,7 @@ namespace Joeri.Tools.Movement
 {
     public partial class Accel
     {
-        public class Singular
+        public class Mono
         {
             public float velocity = 0f;
             public float desiredVelocity = 0f;
