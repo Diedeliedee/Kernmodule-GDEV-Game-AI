@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Boid Settings
   m_EditorClassIdentifier: 
   travelSpeed: 50
-  cohesionForce: 10
-  seperationForce: 80
-  alignmentForce: 10
+  cohesionForce: 40
+  seperationForce: 90
+  alignmentForce: 25
   boundaryOpposingForce: 100
   grip: 1
   cohesionDistance: 30
