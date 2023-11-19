@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Joeri.Tools.AI.Steering;
 using Joeri.Tools.Movement;
 using Joeri.Tools.Utilities;
-using Joeri.Tools.Debugging;
+using UnityEngine;
 
 public class Boid : MonoBehaviour, IBoid
 {

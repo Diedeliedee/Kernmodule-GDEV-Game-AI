@@ -1,9 +1,8 @@
-using System.Collections;
+using Joeri.Tools.AI.Steering;
+using Joeri.Tools.Debugging;
+using Joeri.Tools.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
-using Joeri.Tools.AI.Steering;
-using Joeri.Tools.Utilities;
-using Joeri.Tools.Debugging;
 
 public class Flock : MonoBehaviour, IFlock
 {
@@ -43,6 +42,7 @@ public class Flock : MonoBehaviour, IFlock
         foreach (var pair in m_boids) pair.Value.Tick(Time.deltaTime);
     }
 
+    /// <returns>All boids of this flock, excluding the passed in instance of an IBoid.</returns>
     public List<IBoid> GetPeerBoids(IBoid _exclusion)
     {
         var boidList = new List<IBoid>();
