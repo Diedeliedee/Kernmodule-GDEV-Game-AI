@@ -15,7 +15,7 @@ namespace Joeri.Tools.AI.Steering
 
         protected List<IBoid> FilterToNearbyBoids(Vector3 _position, float _sqrDistance, List<IBoid> _peerBoids)
         {
-            var _nearbyBoids = new List<IBoid>();
+            var _nearbyBoids = new List<IBoid>(_peerBoids.Count);
 
             for (int i = 0; i < _peerBoids.Count; i++)
             {
