@@ -37,18 +37,22 @@ public class Boid : MonoBehaviour, IBoid
 
     public void Tick(float _deltaTime)
     {
-        var context = new Context(_deltaTime, m_settings.travelSpeed, position, velocity);
-
-        var desiredVelocity = m_behaviorHandler.GetDesiredVelocity(context);
-        var resultVelocity = m_movement.CalculateVelocity(desiredVelocity, m_settings.grip, _deltaTime);
+        var resultVelocity = m_movement.CalculateVelocity(
+            m_behaviorHandler.GetDesiredVelocity(
+                new Context(
+                    _deltaTime,
+                    m_settings.travelSpeed,
+                    position,
+                    velocity)),
+            m_settings.grip,
+            _deltaTime);
 
         transform.position += resultVelocity * _deltaTime;
-        transform.LookAt(transform.position + resultVelocity.normalized);
+        transform.LookAt(transform.position + resultVelocity);
     }
 
     public void DrawGizmos()
     {
         m_behaviorHandler.DrawGizmos(transform.position);
-        m_movement.Draw(transform.position, Color.black, Color.green, 0.25f);
     }
 }
