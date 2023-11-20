@@ -8,15 +8,15 @@ namespace Joeri.Tools.AI.Pathfinding
     /// <summary>
     /// Simple A* pathfinder
     /// </summary>
-    public class Pathfinder
+    public partial class Pathfinder
     {
-        private readonly ValidNodeCheck m_nodeCheck     = null;
-        private readonly Vector2Int[] m_validDirections = null;
+        private readonly ValidNodeCheck m_nodeEvaluation    = null;
+        private readonly Vector2Int[] m_validDirections     = null;
 
-        public Pathfinder(ValidNodeCheck nodeCheck, Vector2Int[] validDirections)
+        public Pathfinder(ValidNodeCheck _nodeEvaluation, Vector2Int[] _validDirections)
         {
-            m_nodeCheck         = nodeCheck;
-            m_validDirections   = validDirections;
+            m_nodeEvaluation    = _nodeEvaluation;
+            m_validDirections   = _validDirections;
         }
 
         public Path FindPath(Vector2Int start, Vector2Int goal)
@@ -140,92 +140,7 @@ namespace Joeri.Tools.AI.Pathfinding
         /// <returns>True if the passed in coordinates could harbor a valid Node. False if not.</returns>
         private bool IsValidNode(Vector2Int coordinates)
         {
-            return m_nodeCheck(coordinates);
-        }
-
-        public class Result
-        {
-            public readonly Path path                       = null;
-            public readonly List<Vector2Int> openNodes      = null;
-            public readonly List<Vector2Int> closedNodes    = null;
-
-            public Result(Path path, Dictionary<Vector2Int, Node> openNodes, Dictionary<Vector2Int, Node> closedNodes)
-            {
-                this.path           = path;
-                this.openNodes      = openNodes.Keys.ToList();
-                this.closedNodes    = closedNodes.Keys.ToList();
-            }
-        }
-
-        public class Path
-        {
-            public readonly Vector2Int[] coordinates = null;
-
-            private Tools.Path m_path;
-
-            public float length     { get => m_path.length; }
-            public Vector2Int first { get => coordinates[0]; }
-            public Vector2Int last  { get => coordinates[^1]; }
-
-            public Path(params Vector2Int[] coordinatesBundle)
-            {
-                m_path      = new Tools.Path(CoordsToPosBundle(coordinatesBundle));
-                coordinates = coordinatesBundle;
-            }
-
-            public Tools.Path.Slice GetSlice(int index)
-            {
-                return m_path[index];
-            }
-
-            public bool Has(Vector2Int coordinates)
-            {
-                for (int i = 0; i < m_path.positions.Length; i++)
-                {
-                    var position = m_path.positions[i];
-
-                    if (new Vector2Int(Mathf.FloorToInt(position.x), Mathf.FloorToInt(position.y)) == coordinates) return true;
-                }
-                return false;
-            }
-
-            public Vector2 Lerp(float t)
-            {
-                return m_path.Lerp(t); ;
-            }
-
-            private Vector3[] CoordsToPosBundle(Vector2Int[] coordsBundle)
-            {
-                var positions = new Vector3[coordsBundle.Length];
-
-                for (int i = 0; i < coordsBundle.Length; i++)
-                {
-                    positions[i] = new Vector3(coordsBundle[i].x, coordsBundle[i].y);
-                }
-                return positions;
-            }
-        }
-
-        public class Node
-        {
-            public readonly Node parent = null;
-            public readonly Vector2Int coordinates;
-
-            public readonly int gCost = 0;
-            public readonly int hCost = 0;
-            public readonly int fCost = 0;
-
-            public Node(Vector2Int coordinates, Vector2Int goal, Node parent = null)
-            {
-                this.parent         = parent;
-                this.coordinates    = coordinates;
-
-                if (parent != null) gCost = parent.gCost + Mathf.RoundToInt((coordinates - parent.coordinates).magnitude * 10);
-                else                gCost = 0;
-
-                hCost = Mathf.RoundToInt((goal - coordinates).magnitude * 10);
-                fCost = gCost + hCost;
-            }
+            return m_nodeEvaluation(coordinates);
         }
     
         public delegate bool ValidNodeCheck(Vector2Int coordinates);

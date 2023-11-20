@@ -1,23 +1,37 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Joeri.Tools.AI.Pathfinding;
+
 public class Agent : MonoBehaviour
 {
     public int moveButton = 0;
     public float moveSpeed = 3;
-    private Astar Astar = new Astar();
+
+    //  Components:
+    private MazeGeneration maze;
+
+    private Pathfinder m_pathFinder = null;
     private List<Vector2Int> path = new List<Vector2Int>();
+
     private Plane ground = new Plane(Vector3.up, 0f);
+
+    //  Reference:
     private MeshRenderer renderer;
     private GameObject targetVisual;
-    private MazeGeneration maze;
     private LineRenderer line;
+
+
     private void Awake()
     {
         maze = FindObjectOfType<MazeGeneration>();
+
+        m_pathFinder = new Pathfinder
         renderer = GetComponentInChildren<MeshRenderer>();
+
         targetVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
         targetVisual.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         targetVisual.GetComponent<MeshRenderer>().material.color = renderer.material.color;
+
         line = GetComponent<LineRenderer>();
         line.material.color = renderer.material.color;
         line.material.color = renderer.material.color;
@@ -29,7 +43,7 @@ public class Agent : MonoBehaviour
 
     public void FindPathToTarget(Vector2Int startPos, Vector2Int endPos, Cell[,] grid)
     {
-        path = Astar.FindPathToTarget(startPos, endPos, grid);
+
         DrawPath();
     }
 
@@ -45,10 +59,9 @@ public class Agent : MonoBehaviour
         }
     }
 
-
-    //Move to clicked position
     public void Update()
     {
+        //  Move to clicked position.
         if (Input.GetMouseButtonDown(moveButton))
         {
             Debug.Log("Click");
@@ -73,7 +86,6 @@ public class Agent : MonoBehaviour
                 DrawPath();
             }
         }
-
     }
     public Vector3 MouseToWorld()
     {
@@ -90,20 +102,19 @@ public class Agent : MonoBehaviour
     {
         return new Vector2Int(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.z));
     }
+
     private Vector3 Vector2IntToVector3(Vector2Int pos, float YPos = 0)
     {
         return new Vector3(Mathf.RoundToInt(pos.x), YPos, Mathf.RoundToInt(pos.y));
     }
+
     private void OnDrawGizmos()
     {
-        if (path != null && path.Count > 0)
+        if (path == null || path.Count <= 0) return;
+        for (int i = 0; i < path.Count - 1; i++)
         {
-            for (int i = 0; i < path.Count - 1; i++)
-            {
-                Gizmos.color = renderer.material.color;
-                Gizmos.DrawLine(Vector2IntToVector3(path[i], 0.5f), Vector2IntToVector3(path[i + 1], 0.5f));
-            }
-
+            Gizmos.color = renderer.material.color;
+            Gizmos.DrawLine(Vector2IntToVector3(path[i], 0.5f), Vector2IntToVector3(path[i + 1], 0.5f));
         }
     }
 }
