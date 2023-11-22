@@ -15,8 +15,9 @@ MonoBehaviour:
   travelSpeed: 50
   cohesionForce: 40
   seperationForce: 90
-  alignmentForce: 25
-  boundaryOpposingForce: 100
+  alignmentForce: 10
+  centerAttractionForce: 70
+  boundaryOpposingForce: 25
   grip: 1
   cohesionDistance: 30
   seperationDistance: 2

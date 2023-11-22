@@ -9,6 +9,7 @@ public class BoidSettings : ScriptableObject
     public float seperationForce = 3;
     public float alignmentForce = 3;
     [Space]
+    public float centerAttractionForce = 3;
     public float boundaryOpposingForce = 3;
     [Space]
     public float grip = 3;

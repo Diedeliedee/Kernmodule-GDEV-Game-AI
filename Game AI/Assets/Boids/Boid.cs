@@ -27,6 +27,7 @@ public class Boid : MonoBehaviour, IBoid
                 new Separation(m_settings.seperationDistance, m_settings.seperationForce),
                 new Alignment(m_settings.cohesionDistance)),
             new MoveForward(m_settings.travelSpeed, transform),
+            new MoveToPoint(m_flock.transform.position, m_settings.centerAttractionForce),
             new StayInArea(m_flock.transform.position, m_flock.areaRadius, m_settings.boundaryOpposingForce));
 
         transform.LookAt(transform.position += Vectors.RandomSpherePoint(1f).normalized);
