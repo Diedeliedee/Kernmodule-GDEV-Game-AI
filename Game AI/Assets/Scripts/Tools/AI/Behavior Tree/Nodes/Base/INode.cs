@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace Joeri.Tools.AI.BehaviorTree
 {
-    public class Module<T> : Node
+    public interface INode
     {
-        public T source { get; private set; }
-
-        public Module(T source)
-        {
-            this.source = source;
-        }
+        /// <returns>The state that the evaluation resulted in.</returns>
+        public State Evaluate();
     }
 }
