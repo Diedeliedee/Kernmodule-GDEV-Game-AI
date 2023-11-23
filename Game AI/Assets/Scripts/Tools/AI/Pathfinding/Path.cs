@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+/*
 namespace Joeri.Tools.AI.Pathfinding
 {
     public class Path
@@ -51,3 +52,4 @@ namespace Joeri.Tools.AI.Pathfinding
         }
     }
 }
+*/

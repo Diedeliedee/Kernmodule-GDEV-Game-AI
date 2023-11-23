@@ -9,8 +9,6 @@ public class Agent : MonoBehaviour
 
     //  Components:
     private MazeGeneration maze;
-
-    private Pathfinder m_pathFinder = null;
     private List<Vector2Int> path = new List<Vector2Int>();
 
     private Plane ground = new Plane(Vector3.up, 0f);
@@ -24,8 +22,6 @@ public class Agent : MonoBehaviour
     private void Awake()
     {
         maze = FindObjectOfType<MazeGeneration>();
-
-        m_pathFinder = new Pathfinder
         renderer = GetComponentInChildren<MeshRenderer>();
 
         targetVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -43,8 +39,28 @@ public class Agent : MonoBehaviour
 
     public void FindPathToTarget(Vector2Int startPos, Vector2Int endPos, Cell[,] grid)
     {
+        var validDirections = new Vector2Int[] { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+        var pathFinder = new AStar(TileEvaluation, validDirections);
 
+        path = pathFinder.GetPath(startPos, endPos);
         DrawPath();
+
+        //  Returns true if the 'from' coordinate to the 'to' coordinate is accesible.
+        bool TileEvaluation(Vector2Int _from, Vector2Int _to)
+        {
+            if (_to.x < 0 || _to.x >= grid.GetLength(0)) return false;
+            if (_to.y < 0 || _to.y >= grid.GetLength(1)) return false;
+            return !grid[_to.x, _to.y].HasWall(DirectionToWall(_to - _from));
+        }
+
+        //  Returns the first wall enum that the given direction wouldn't be able to pass through. 
+        Wall DirectionToWall(Vector2Int _dir)
+        {
+            if (_dir.y < 0) return Wall.UP;
+            if (_dir.y > 0) return Wall.DOWN;
+            if (_dir.x > 0) return Wall.LEFT;
+            return Wall.RIGHT;
+        }
     }
 
     private void DrawPath()

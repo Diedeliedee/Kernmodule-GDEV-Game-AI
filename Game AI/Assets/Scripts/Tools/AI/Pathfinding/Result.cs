@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
+/*
 namespace Joeri.Tools.AI.Pathfinding
 {
     public class Result
@@ -18,3 +19,4 @@ namespace Joeri.Tools.AI.Pathfinding
         }
     }
 }
+*/
