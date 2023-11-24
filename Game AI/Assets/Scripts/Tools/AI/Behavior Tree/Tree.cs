@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Joeri.Tools.AI.BehaviorTree
+﻿namespace Joeri.Tools.AI.BehaviorTree
 {
     public class BehaviorTree
     {
-        private Node m_root = null;
+        private INode m_root = null;
 
-        public BehaviorTree(Node rootNode)
+        public BehaviorTree(INode rootNode)
         {
             m_root = rootNode;
         }

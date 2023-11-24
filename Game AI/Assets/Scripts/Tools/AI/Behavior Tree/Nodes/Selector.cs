@@ -1,38 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Joeri.Tools.AI.BehaviorTree
+﻿namespace Joeri.Tools.AI.BehaviorTree
 {
-    public class Selector : Node
+    public class Selector : CompositeNode
     {
-        public Selector(params Node[] children) : base(children) { }
+        public Selector(params Node[] _children) : base(_children) { }
 
         public override State Evaluate()
         {
             //  Check node states of the children.
-            foreach (var node in children)
+            for (int i = 0; i < children.Length; i++)
             {
-                switch (node.Evaluate())
+                switch (children[i].Evaluate())
                 {
                     //  If the current node has failed, move on to evaluate the next.
-                    case State.Failure:
-                        continue;
+                    case State.Failure: continue;
 
                     // If the current child is running, the selector is still running too.
-                    case State.Running:
-                        return RetrieveState(State.Running);
+                    case State.Running: return State.Running;
 
                     //  If the current child has been a succes, the selector has been a succes too.
-                    case State.Succes:
-                        return RetrieveState(State.Succes);
+                    case State.Succes: return State.Succes;
                 }
             }
 
             //  If no children are running, none can be selected, and the selector has failed.
-            return RetrieveState(State.Failure);
+            return State.Failure;
         }
     }
 }
