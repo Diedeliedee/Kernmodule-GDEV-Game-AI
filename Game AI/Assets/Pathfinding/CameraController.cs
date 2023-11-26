@@ -18,15 +18,15 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float vert = Input.GetAxis("Vertical");
-        float hor = Input.GetAxis("Horizontal");
+        float vert = Input.GetAxisRaw("Vertical");
+        float hor = Input.GetAxisRaw("Horizontal");
 
         if(vert != 0 || hor != 0)
         {
             targetPos += (Vector3.forward * vert + hor * Vector3.right).normalized * moveSpeed;
         }
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
         if(scroll != 0)
         {
             yPos += -Mathf.Sign(scroll) * zoomSpeed;
