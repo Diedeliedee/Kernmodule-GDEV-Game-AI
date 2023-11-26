@@ -2,6 +2,7 @@
 using Joeri.Tools.Utilities;
 using Joeri.Tools.Debugging;
 
+/*
 namespace Joeri.Tools.AI.Pathfinding
 {
     public class PathfindTest : MonoBehaviour
@@ -144,3 +145,4 @@ namespace Joeri.Tools.AI.Pathfinding
         }
     }
 }
+*/
