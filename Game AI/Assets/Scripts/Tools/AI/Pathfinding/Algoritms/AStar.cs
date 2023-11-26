@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Joeri.Tools.AI.Pathfinding
 {
-    public class AStar
+    public class AStar : IAlgorithm
     {
         private readonly NodeEvaluation m_nodeEvaluation    = null;
         private readonly Vector2Int[] m_validDirections     = null;
