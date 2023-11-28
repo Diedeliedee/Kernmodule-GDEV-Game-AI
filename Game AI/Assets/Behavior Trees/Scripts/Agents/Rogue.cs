@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Rogue : MonoBehaviour
 {
 
-    private BTBaseNode tree;
+    //private BTBaseNode tree;
     private NavMeshAgent agent;
     private Animator animator;
     private void Awake()
@@ -23,6 +23,6 @@ public class Rogue : MonoBehaviour
 
     private void FixedUpdate()
     {
-        tree?.Run();
+        //tree?.Run();
     }
 }
