@@ -12,5 +12,10 @@
                 node.AttachParent(this);
             }
         }
+
+        public override void OnAbort()
+        {
+            for (int i = 0; i < children.Length; i++) children[i].OnAbort();
+        }
     }
 }
