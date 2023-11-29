@@ -9,5 +9,10 @@
             child = _child;             //  Attach child to the node.
             _child.AttachParent(this);  //  Attach this node as the children's parent.
         }
+
+        public override void OnAbort()
+        {
+            child.OnAbort();
+        }
     }
 }

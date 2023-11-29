@@ -28,5 +28,12 @@
             m_index = 0;
             return State.Succes;
         }
+
+        public override void OnAbort()
+        {
+            //  Abort the node currently active in the sequence.
+            children[m_index].OnAbort();
+            m_index = 0;
+        }
     }
 }
