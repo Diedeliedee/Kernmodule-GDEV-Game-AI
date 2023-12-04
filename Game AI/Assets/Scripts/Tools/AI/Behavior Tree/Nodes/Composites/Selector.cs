@@ -1,5 +1,4 @@
 ﻿namespace Joeri.Tools.AI.BehaviorTree
-namespace Joeri.Tools.AI.BehaviorTree
 {
     public class Selector : CompositeNode
     {

@@ -3,7 +3,7 @@
     public abstract class Node : INode
     {
         public Node parent { get; private set; }
-        protected Patterns.Blackboard board { get; private set; }
+        protected Patterns.ContainerBlackboard board { get; private set; }
 
         public abstract State Evaluate();
 
@@ -23,7 +23,7 @@
         /// <summary>
         /// Attaches the passed in blackboard to the Node. And depending on overrides, can pass it down to the Node's children too.
         /// </summary>
-        public virtual void PassBlackboard(Patterns.Blackboard _blackboard)
+        public virtual void PassBlackboard(Patterns.ContainerBlackboard _blackboard)
         {
             board = _blackboard;
         }

@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using Joeri.Tools.AI.BehaviorTree;
+using Joeri.Tools.Patterns;
 
 public class Guard : MonoBehaviour
 {
@@ -26,6 +27,18 @@ public class Guard : MonoBehaviour
 
     private void Start()
     {
+        //  Constructing blackboard.
+        var blackBoard = new ContainerBlackboard();
+
+        var patrolBranch = new Sequence(
+            new NavigateToTransform(agent, m_transforms[0]),
+            new NavigateToTransform(agent, m_transforms[1]),
+            new NavigateToTransform(agent, m_transforms[2]),
+            new NavigateToTransform(agent, m_transforms[3]));
+
+        var grabWeaponBranch = new Sequence(
+            );
+
         m_tree = new BehaviorTree(
             new Sequence(
                 new NavigateToTransform(agent, m_transforms[0]),

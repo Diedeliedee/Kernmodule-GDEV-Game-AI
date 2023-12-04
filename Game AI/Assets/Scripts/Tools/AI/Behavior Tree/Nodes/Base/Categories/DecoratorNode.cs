@@ -17,7 +17,7 @@ namespace Joeri.Tools.AI.BehaviorTree
             child.OnAbort();
         }
 
-        public override void PassBlackboard(Blackboard _blackboard)
+        public override void PassBlackboard(ContainerBlackboard _blackboard)
         {
             base.PassBlackboard(_blackboard);
             child.PassBlackboard(_blackboard);
