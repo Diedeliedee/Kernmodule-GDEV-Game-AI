@@ -1,4 +1,6 @@
-﻿namespace Joeri.Tools.AI.BehaviorTree
+﻿using Joeri.Tools.Patterns;
+
+namespace Joeri.Tools.AI.BehaviorTree
 {
     public abstract class DecoratorNode : Node
     {
@@ -13,6 +15,12 @@
         public override void OnAbort()
         {
             child.OnAbort();
+        }
+
+        public override void PassBlackboard(Blackboard _blackboard)
+        {
+            base.PassBlackboard(_blackboard);
+            child.PassBlackboard(_blackboard);
         }
     }
 }

@@ -17,5 +17,14 @@
         {
             for (int i = 0; i < children.Length; i++) children[i].OnAbort();
         }
+
+        public override void PassBlackboard(Patterns.Blackboard _blackboard)
+        {
+            base.PassBlackboard(_blackboard);
+            for (int i = 0; i < children.Length; i++)
+            {
+                children[i].PassBlackboard(_blackboard);
+            }
+        }
     }
 }
