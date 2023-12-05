@@ -2,9 +2,9 @@
 {
     public class BehaviorTree
     {
-        private INode m_root = null;
+        private Node m_root = null;
 
-        public BehaviorTree(INode rootNode)
+        public BehaviorTree(Node rootNode)
         {
             m_root = rootNode;
         }
@@ -12,6 +12,11 @@
         public void Tick()
         {
             m_root?.Evaluate();
+        }
+
+        public void PassBlackboard(Patterns.FittedBlackboard _blackboard)
+        {
+            m_root.PassBlackboard(_blackboard);
         }
     }
 }

@@ -4,20 +4,14 @@ using UnityEngine.AI;
 
 namespace Joeri.Tools.AI.BehaviorTree
 {
-    public class NavigateToTransform : LeafNode
+    public class NavigateToTarget : LeafNode
     {
-        public readonly NavMeshAgent m_agent = null;
-        public readonly Transform m_target = null;
-
-        public NavigateToTransform(NavMeshAgent _agent, Transform _target)
-        {
-            m_agent = _agent;
-            m_target = _target;
-        }
+        public NavMeshAgent m_agent = null;
 
         public override void OnEnter()
         {
-            if (m_agent.SetDestination(m_target.position));
+            m_agent = board.Get<NavMeshAgent>();
+            m_agent.SetDestination(board.Get<TargetMemory>().target);
         }
 
         public override State OnUpdate()
@@ -29,6 +23,7 @@ namespace Joeri.Tools.AI.BehaviorTree
         public override void OnExit()
         {
             m_agent.ResetPath();
+            m_agent = null;
         }
     }
 }

@@ -46,6 +46,9 @@
         /// <summary>
         /// Called when the task needs to be aborted, because the branch the task is a part of is interrupted.
         /// </summary>
-        public override void OnAbort() { }
+        public override void OnAbort()
+        {
+            OnExit();
+        }
     }
 }
