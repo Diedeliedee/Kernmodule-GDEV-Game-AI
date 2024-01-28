@@ -49,6 +49,7 @@
         public override void OnAbort()
         {
             OnExit();
+            m_activated = false;
         }
     }
 }
