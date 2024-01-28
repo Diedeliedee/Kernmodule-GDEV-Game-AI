@@ -20,6 +20,12 @@ namespace Joeri.Tools.Patterns
 
         public void Add(object _instance)
         {
+            if (_instance == null)
+            {
+                Debug.LogWarning("Object passed in the Blackboard is null. This could be a problem for attempting to retrieve it in the future.");
+                return;
+            }
+
             var key = _instance.GetType();
             if (m_pool.ContainsKey(key))
             {
