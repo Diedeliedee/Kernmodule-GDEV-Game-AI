@@ -12,8 +12,7 @@ namespace Joeri.Tools.AI.BehaviorTree
         {
             var checkpointMemory = board.Get<CheckpointMemory>();
 
-            board.Get<TargetMemory>().SetTarget(checkpointMemory.currentCheckpoint.Value.position);
-            checkpointMemory.currentCheckpoint = checkpointMemory.currentCheckpoint.Next;
+            board.Get<TargetMemory>().SetTarget(checkpointMemory.GetNext().position);
             return State.Succes;
         }
     }

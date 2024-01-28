@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class CheckpointMemory
 {
-    public LinkedList<Transform> checkpoints = new();
-    public LinkedListNode<Transform> currentCheckpoint = null;
+    public List<Transform> checkpoints = new();
+    public int index = 0;
 
     public CheckpointMemory(params Transform[] _checkpoints)
     {
-        //  Adding checkpoints.
-        for (int i = 0; i < _checkpoints.Length; i++) checkpoints.AddLast(_checkpoints[i]);
+        for (int i = 0; i < _checkpoints.Length; i++) checkpoints.Add(_checkpoints[i]);
+    }
 
-        //  Connecting ends.
-        checkpoints.AddLast(checkpoints.First);
-
-        //  Caching the current checkpoint.
-        currentCheckpoint = checkpoints.First;
+    public Transform GetNext()
+    {
+        ++index;
+        if (index>= checkpoints.Count) index = 0;
+        return checkpoints[index];
     }
 }
