@@ -20,7 +20,7 @@ public class Guard : MonoBehaviour
     [SerializeField] private Transform[] m_checkpoints = null;
     [SerializeField] private WeaponPickup m_weaponPickup = null;
     [Space]
-    [SerializeField] private Player m_player = null;
+    [SerializeField] private PlayerMovement m_player = null;
 
     //  Components:
     private BehaviorTree m_tree;

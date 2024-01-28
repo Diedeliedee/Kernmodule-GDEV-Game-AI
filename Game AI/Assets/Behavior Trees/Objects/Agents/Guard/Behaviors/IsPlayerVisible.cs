@@ -26,7 +26,7 @@ public class IsPlayerVisible : LeafNode
         {
             //  Try to detect player.
             if (!Physics.Raycast(m_pointOfOrigin.position, m_pointOfOrigin.forward, out RaycastHit _hit, m_range))  { Iterate(); continue; }
-            if (!_hit.transform.TryGetComponent(out Player _player))                                                { Iterate(); continue; }
+            if (!_hit.transform.TryGetComponent(out PlayerMovement _player))                                        { Iterate(); continue; }
 
             //  Draw debug ray, and cleanup transform.
             Debug.DrawRay(m_pointOfOrigin.position, m_pointOfOrigin.forward * _hit.distance);
