@@ -1,4 +1,6 @@
-﻿namespace Joeri.Tools.AI.BehaviorTree
+﻿using UnityEngine;
+
+namespace Joeri.Tools.AI.BehaviorTree
 {
     public abstract class Node : INode
     {
@@ -27,5 +29,10 @@
         {
             board = _blackboard;
         }
+
+        /// <summary>
+        /// Draws any gizmos that leaf nodes may want to display.
+        /// </summary>
+        public abstract void OnDraw(Vector3 _center);
     }
 }

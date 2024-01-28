@@ -1,4 +1,6 @@
-﻿namespace Joeri.Tools.AI.BehaviorTree
+﻿using UnityEngine;
+
+namespace Joeri.Tools.AI.BehaviorTree
 {
     public class Sequence : CompositeNode
     {
@@ -31,9 +33,14 @@
 
         public override void OnAbort()
         {
-            //  Abort the node currently active in the sequence.
             children[m_index].OnAbort();
+
             m_index = 0;
+        }
+
+        public override void OnDraw(Vector3 _center)
+        {
+            children[m_index].OnDraw(_center);
         }
     }
 }

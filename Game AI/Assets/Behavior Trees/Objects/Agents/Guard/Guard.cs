@@ -103,4 +103,10 @@ public class Guard : MonoBehaviour
 
         m_tree?.Tick();
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!Application.isPlaying) return;
+        m_tree.Draw(transform.position);
+    }
 }

@@ -1,4 +1,6 @@
-﻿namespace Joeri.Tools.AI.BehaviorTree
+﻿using UnityEngine;
+
+namespace Joeri.Tools.AI.BehaviorTree
 {
     public class BehaviorTree
     {
@@ -12,6 +14,11 @@
         public void Tick()
         {
             m_root?.Evaluate();
+        }
+
+        public void Draw(Vector3 _center)
+        {
+            m_root?.OnDraw(_center);
         }
 
         public void PassBlackboard(Patterns.FittedBlackboard _blackboard)

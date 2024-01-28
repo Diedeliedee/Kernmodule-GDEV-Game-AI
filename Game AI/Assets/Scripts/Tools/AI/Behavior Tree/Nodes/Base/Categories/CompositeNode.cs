@@ -1,4 +1,6 @@
-﻿namespace Joeri.Tools.AI.BehaviorTree
+﻿using UnityEngine;
+
+namespace Joeri.Tools.AI.BehaviorTree
 {
     public abstract class CompositeNode : Node
     {
@@ -25,6 +27,11 @@
             {
                 children[i].PassBlackboard(_blackboard);
             }
+        }
+
+        public override void OnDraw(Vector3 _center)
+        {
+            for (int i = 0; i < children.Length; i++) children[i].OnDraw(_center);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Joeri.Tools.Patterns;
+﻿using UnityEngine;
+using Joeri.Tools.Patterns;
 
 namespace Joeri.Tools.AI.BehaviorTree
 {
@@ -21,6 +22,11 @@ namespace Joeri.Tools.AI.BehaviorTree
         {
             base.PassBlackboard(_blackboard);
             child.PassBlackboard(_blackboard);
+        }
+
+        public override void OnDraw(Vector3 _center)
+        {
+            child.OnDraw(_center);
         }
     }
 }

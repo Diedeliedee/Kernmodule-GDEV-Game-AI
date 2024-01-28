@@ -1,4 +1,7 @@
-﻿namespace Joeri.Tools.AI.BehaviorTree
+﻿using UnityEditor;
+using UnityEngine;
+
+namespace Joeri.Tools.AI.BehaviorTree
 {
     public abstract class LeafNode : Node
     {
@@ -50,6 +53,11 @@
         {
             OnExit();
             m_activated = false;
+        }
+
+        public override void OnDraw(Vector3 _center)
+        {
+            Handles.Label(_center, GetType().Name);
         }
     }
 }
