@@ -1,8 +1,8 @@
 ﻿namespace Joeri.Tools.AI.BehaviorTree
 {
-    public class Inverter : DecoratorNode
+    public class Invert : DecoratorNode
     {
-        public Inverter(Node _child) : base(_child) { }
+        public Invert(Node _child) : base(_child) { }
 
         public override State Evaluate()
         {

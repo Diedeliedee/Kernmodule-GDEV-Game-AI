@@ -6,17 +6,20 @@ namespace Joeri.Tools.AI.BehaviorTree
 {
     public class NavigateToTarget : LeafNode
     {
-        public NavMeshAgent m_agent = null;
+        private NavMeshAgent m_agent = null;
+        private TargetMemory m_memory = null;
 
         public override void OnEnter()
         {
+            m_memory ??= board.Get<TargetMemory>();
+
             m_agent = board.Get<NavMeshAgent>();
-            m_agent.SetDestination(board.Get<TargetMemory>().target);
+            m_agent.SetDestination(m_memory.target);
         }
 
         public override State OnUpdate()
         {
-            if (m_agent.pathPending || m_agent.remainingDistance > 0) return State.Running;
+            if (m_agent.pathPending || m_agent.remainingDistance > m_memory.epsilon) return State.Running;
             return State.Succes;
         }
 

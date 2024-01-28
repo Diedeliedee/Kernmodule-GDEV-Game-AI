@@ -3,7 +3,7 @@
     public abstract class Node : INode
     {
         public Node parent { get; private set; }
-        protected Patterns.FittedBlackboard board { get; private set; }
+        public Patterns.FittedBlackboard board { get; private set; }
 
         public abstract State Evaluate();
 

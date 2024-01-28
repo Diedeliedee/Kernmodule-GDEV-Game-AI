@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 namespace Joeri.Tools.AI.BehaviorTree
 {
     public class SetTarget : LeafNode
     {
-        private Vector3 m_target = default;
+        private Transform m_target = default;
 
-        public SetTarget(Vector3 _target)
+        public SetTarget(Transform _target)
         {
             m_target = _target;
         }
 
         public override State OnUpdate()
         {
-            board.Get<TargetMemory>().SetTarget(m_target);
+            board.Get<TargetMemory>().SetTarget(m_target.position);
             return State.Succes;
         }
 
