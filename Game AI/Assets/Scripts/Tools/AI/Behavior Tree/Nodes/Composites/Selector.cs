@@ -12,7 +12,7 @@ namespace Joeri.Tools.AI.BehaviorTree
         public override State Evaluate()
         {
             //  Check node states of the children.
-            for (; m_index < children.Length; m_index++)
+            for (m_index = 0; m_index < children.Length; m_index++)
             {
                 switch (children[m_index].Evaluate())
                 {
@@ -39,7 +39,6 @@ namespace Joeri.Tools.AI.BehaviorTree
         public override void OnAbort()
         {
             children[m_index].OnAbort();
-
             m_index = 0;
             m_lastIndex = 0;
         }

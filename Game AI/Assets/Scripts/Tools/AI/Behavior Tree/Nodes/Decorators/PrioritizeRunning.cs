@@ -1,8 +1,8 @@
 ﻿namespace Joeri.Tools.AI.BehaviorTree
 {
-    public class PrioritizeSucces : DecoratorNode
+    public class PrioritizeRunning : DecoratorNode
     {
-        public PrioritizeSucces(Node _child) : base(_child) { }
+        public PrioritizeRunning(Node _child) : base(_child) { }
 
         public override State Evaluate()
         {
@@ -12,7 +12,7 @@
 
                 case State.Running:
                 case State.Succes:
-                    return State.Succes;
+                    return State.Running;
             }
         }
     }

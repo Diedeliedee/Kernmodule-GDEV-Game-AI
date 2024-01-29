@@ -1,22 +1,21 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Joeri.Tools.AI.BehaviorTree
 {
-    public class Condition : CompositeNode
+    public class Consideration : CompositeNode
     {
         private int m_index = 0;
 
-        private readonly System.Func<bool> m_condition = null;
+        private readonly System.Func<bool> m_consideration = null;
 
-        public Condition(System.Func<bool> _condition, Node _if, Node _else) : base(_if, _else)
+        public Consideration(System.Func<bool> _consideration, Node _if, Node _else) : base(_if, _else)
         {
-            m_condition = _condition;
+            m_consideration = _consideration;
         }
 
         public override State Evaluate()
         {
-            if (m_condition())  m_index = 0;
+            if (m_consideration())  m_index = 0;
             else                m_index = 1;
             return children[m_index].Evaluate();
         }

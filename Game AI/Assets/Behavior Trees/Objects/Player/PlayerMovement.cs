@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Accel.Flat m_flatAcceleration = new();
 
+    public Vector3 velocity => new Vector3(m_flatAcceleration.velocity.x, 0f, m_flatAcceleration.velocity.y);
+
     // Update is called once per frame
     private void Update()
     {
