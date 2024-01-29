@@ -20,12 +20,13 @@ namespace Joeri.Tools.AI.BehaviorTree
                     case State.Failure: continue;
 
                     // If the current child is running, the selector is still running too.
-                    case State.Running: return State.Running;
+                    case State.Running:
+                        RegisterIndex();
+                        return State.Running;
 
                     //  If the current child has been a succes, the selector has been a succes too.
                     case State.Succes:
-                        if (m_index < m_lastIndex) children[m_lastIndex].OnAbort();
-                        m_lastIndex = m_index;
+                        RegisterIndex();
                         return State.Succes;
                 }
             }
@@ -34,6 +35,12 @@ namespace Joeri.Tools.AI.BehaviorTree
             m_index = 0;
             m_lastIndex = 0;
             return State.Failure;
+        }
+
+        private void RegisterIndex()
+        {
+            if (m_index < m_lastIndex) children[m_lastIndex].OnAbort();
+            m_lastIndex = m_index;
         }
 
         public override void OnAbort()

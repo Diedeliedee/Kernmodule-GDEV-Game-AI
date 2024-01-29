@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3204627055018535859}
   - component: {fileID: 5257517157661862321}
   m_Layer: 0
-  m_Name: AI_Guard
+  m_Name: PRE_Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_detectionRange: 10
   m_fieldOfView: 90
   m_detectionResolution: 10
-  m_predictionInSeconds: 1
+  m_predictionInSeconds: 0.5
   m_damageRange: 3
   m_targetRadius: 1
   m_checkpoints:
@@ -144,6 +144,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  m_pickup: {fileID: 0}
   m_holster: {fileID: 3355447219627236636}
   m_player: {fileID: 0}
   m_detection: {fileID: 3210266003806920970}

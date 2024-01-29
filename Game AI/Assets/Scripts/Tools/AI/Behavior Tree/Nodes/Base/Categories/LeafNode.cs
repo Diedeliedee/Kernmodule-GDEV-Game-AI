@@ -5,7 +5,19 @@ namespace Joeri.Tools.AI.BehaviorTree
 {
     public abstract class LeafNode : Node
     {
+        private readonly string m_name = "";
         private bool m_activated = false;
+
+        public LeafNode()
+        {
+            m_name = GetType().Name;
+        }
+
+        public LeafNode(string _name)
+        {
+            if (_name == "") _name = GetType().Name;
+            m_name = _name;
+        }
 
         public override State Evaluate()
         {
@@ -57,7 +69,7 @@ namespace Joeri.Tools.AI.BehaviorTree
 
         public override void OnDraw(Vector3 _center)
         {
-            Handles.Label(_center, GetType().Name);
+            Handles.Label(_center, m_name);
         }
     }
 }

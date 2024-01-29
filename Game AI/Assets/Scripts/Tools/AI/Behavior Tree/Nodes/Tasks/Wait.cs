@@ -4,7 +4,7 @@
     {
         private Timer m_timer = null;
 
-        public Wait(float _seconds)
+        public Wait(float _seconds, string _name = "") : base(_name)
         {
             m_timer = new Timer(_seconds);
         }

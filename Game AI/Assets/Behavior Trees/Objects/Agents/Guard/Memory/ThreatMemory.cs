@@ -19,5 +19,15 @@ public class ThreatMemory
     {
         threat = null;
         lastSeenThreatLocation = default;
+        locationPrediction = default;
+    }
+
+    public void Draw()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(lastSeenThreatLocation, 0.5f);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(locationPrediction, 0.5f);
     }
 }

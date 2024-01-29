@@ -5,7 +5,7 @@ namespace Joeri.Tools.AI.BehaviorTree
 {
     public abstract class DecoratorNode : Node
     {
-        public Node child { get; private set; }
+        public readonly Node child = null;
 
         public DecoratorNode(Node _child)
         {

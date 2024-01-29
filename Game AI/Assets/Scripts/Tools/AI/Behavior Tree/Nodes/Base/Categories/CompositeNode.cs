@@ -4,7 +4,7 @@ namespace Joeri.Tools.AI.BehaviorTree
 {
     public abstract class CompositeNode : Node
     {
-        public Node[] children { get; private set; }
+        public readonly Node[] children = null;
 
         public CompositeNode(params Node[] _children)
         {

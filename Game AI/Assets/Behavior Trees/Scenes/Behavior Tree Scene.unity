@@ -1206,6 +1206,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6677696298458585940, guid: a68623a68704ef54198621979ec3e593,
         type: 3}
+      propertyPath: m_pickup
+      value: 
+      objectReference: {fileID: 232676120}
+    - target: {fileID: 6677696298458585940, guid: a68623a68704ef54198621979ec3e593,
+        type: 3}
       propertyPath: m_player
       value: 
       objectReference: {fileID: 1267729046}

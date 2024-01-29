@@ -9,6 +9,8 @@ namespace Joeri.Tools.AI.BehaviorTree
         private NavMeshAgent m_agent = null;
         private TargetMemory m_memory = null;
 
+        public NavigateToTarget(string _name = "") : base(_name) { }
+
         public override void OnEnter()
         {
             m_memory ??= board.Get<TargetMemory>();

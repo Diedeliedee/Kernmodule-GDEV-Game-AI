@@ -16,6 +16,7 @@ public class Guard : MonoBehaviour
 
     [Header("Hard-coded References:")]
     [SerializeField] private Transform[] m_checkpoints;
+    [SerializeField] private WeaponPickup m_pickup;
     [SerializeField] private GameObject m_holster;
     [Space]
     [SerializeField] private PlayerMovement m_player;
@@ -59,34 +60,35 @@ public class Guard : MonoBehaviour
         blackBoard.Add(m_threatMemory);
 
         //  Constructing the branch run when the guard has a weapon and chases the player.
-        var chaseBranch = new Sequence(
-            new Invert(
-                new IsAnimationPlaying("ANIM_Attack")),
-            new SetTarget(m_player.transform),
-            new PrioritizeSucces(
-                new NavigateToTarget()),
-            new InRangeOf(m_player.transform, m_damageRange),
-            new Action(() => m_animator.CrossFade("ANIM_Attack", 0f)));
+        var chaseBranch = new NonFailable(
+            new Sequence(
+                new Invert(
+                    new IsAnimationPlaying("ANIM_Attack")),
+                new SetTarget(m_player.transform),
+                new PrioritizeSucces(
+                    new NavigateToTarget("Navigating to player.")),
+                new InRangeOf(m_player.transform, m_damageRange),
+                new Action(() => m_animator.CrossFade("ANIM_Attack", 0f))));
 
         //  Constructing the branch run when the guard needs to arm themselves.
         //  (Add additional hide node when a weapon cannot be located?)
         var armBranch = new Routine(
             new Condition(() => !m_weaponMemory.hasWeapon),
-            new Action(() => m_weaponMemory.closestWeaponPickup = FindObjectOfType<WeaponPickup>()),
-            new NavigateToTarget(),
-            new Action(() => { m_weaponMemory.RegisterWeapon(); m_holster.SetActive(true); }));
+            new Action(() => m_targetMemory.SetTarget(m_pickup.transform.position)),
+            new NavigateToTarget("Navigating to weapon."),
+            new Action(() => { m_weaponMemory.RegisterWeapon(m_pickup.Pickup()); m_holster.SetActive(true); }));
 
         //  Constructing the branch run when the guard is in a patrolling state.
         var patrolBranch = new Routine(
             new Action(() => m_targetMemory.SetTarget(m_checkpointMemory.GetNext().position)),
-            new NavigateToTarget(),
-            new Wait(1f));
+            new NavigateToTarget("Navigating to next checkpoint."),
+            new Wait(1f, "Idling at checkpoint."));
 
         //  Constructing the branch run when the guard has noticed a threat.
         var searchBranch = new Routine(
             new Action(TestSetTargetToPredictedLocation),
-            new NavigateToTarget(),
-            new Wait(3f),
+            new NavigateToTarget("Searching for player.."),
+            new Wait(3f, "Must've been the wind."),
             new Action(() => m_threatMemory.Forget()));
 
         //  Constructing general tree.
@@ -137,5 +139,6 @@ public class Guard : MonoBehaviour
     {
         if (!Application.isPlaying) return;
         m_tree.Draw(transform.position);
+        m_threatMemory.Draw();
     }
 }
