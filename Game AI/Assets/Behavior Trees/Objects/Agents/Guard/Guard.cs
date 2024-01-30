@@ -3,61 +3,52 @@ using UnityEngine.AI;
 using Joeri.Tools.AI.BehaviorTree;
 using Joeri.Tools.Patterns;
 
-public class Guard : MonoBehaviour
+public class Guard : Agent
 {
     [Header("Properties:")]
-    [SerializeField] private float m_detectionRange = 3f;
-    [SerializeField] private float m_fieldOfView = 3f;
     [SerializeField] private int m_detectionResolution = 10;
     [SerializeField] private float m_predictionInSeconds = 1f;
     [Space]
     [SerializeField] private float m_damageRange = 1f;
-    [SerializeField] private float m_targetRadius = 0.5f;
 
     [Header("Hard-coded References:")]
     [SerializeField] private Transform[] m_checkpoints;
-    [SerializeField] private WeaponPickup m_pickup;
     [SerializeField] private GameObject m_holster;
-    [Space]
-    [SerializeField] private PlayerMovement m_player;
-    [SerializeField] private PlayerDetection m_detection;
 
-    //  Components:
-    private BehaviorTree m_tree;
-
-    //  Dependencies:
-    private NavMeshAgent m_agent;
-    private Animator m_animator;
-
-    //  Tree info streaming or something:
-    private SelfMemory m_selfMemory = new();
-    private TimeMemory m_timeMemory = new();
-    private TargetMemory m_targetMemory = null;
+    //  Behavior memory:
     private ThreatMemory m_threatMemory = new();
     private WeaponMemory m_weaponMemory = new();
     private CheckpointMemory m_checkpointMemory = null;
 
-    private void Awake()
+    //  References:
+    private WeaponPickup m_pickup;
+    private PlayerMovement m_player;
+    private PlayerDetection m_detection;
+
+    protected override void Awake()
     {
-        m_targetMemory = new(m_targetRadius);
+        base.Awake();
+
         m_checkpointMemory = new(m_checkpoints);
 
-        m_agent = GetComponent<NavMeshAgent>();
-        m_animator = GetComponent<Animator>();
+        m_pickup = FindObjectOfType<WeaponPickup>();
+
+        m_player = FindObjectOfType<PlayerMovement>();
+        m_detection = GetComponentInChildren<PlayerDetection>();
     }
 
-    private void Start()
+    private void FixedUpdate()
     {
-        //  Constructing blackboard.
-        var blackBoard = new FittedBlackboard();
+        m_selfMemory.Update(transform, m_agent.velocity);
+        m_timeMemory.deltaTime = Time.fixedDeltaTime;
 
+        m_tree?.Tick();
+    }
+
+    protected override BehaviorTree CreateTree(FittedBlackboard _blackboard)
+    {
         //  JOERI, keep in mind that memory classes might no be necessary if a large portion of the tree is doable with actions.
-        blackBoard.Add(m_agent);
-        blackBoard.Add(m_animator);
-        blackBoard.Add(m_selfMemory);
-        blackBoard.Add(m_timeMemory);
-        blackBoard.Add(m_targetMemory);
-        blackBoard.Add(m_threatMemory);
+        _blackboard.Add(m_threatMemory);
 
         //  Constructing the branch run when the guard has a weapon and chases the player.
         var chaseBranch = new NonFailable(
@@ -86,13 +77,13 @@ public class Guard : MonoBehaviour
 
         //  Constructing the branch run when the guard has noticed a threat.
         var searchBranch = new Routine(
-            new Action(TestSetTargetToPredictedLocation),
+            new Action(() => m_targetMemory.SetTarget(m_threatMemory.locationPrediction)),
             new NavigateToTarget("Searching for player.."),
             new Wait(3f, "Must've been the wind."),
             new Action(() => m_threatMemory.Forget()));
 
         //  Constructing general tree.
-        m_tree = new BehaviorTree(
+        return new BehaviorTree(
             new Selector(
                 new Sequence(
                     new Condition(() => RegisterPlayerUponDetection()),
@@ -105,22 +96,6 @@ public class Guard : MonoBehaviour
                         armBranch,
                         searchBranch)),
                 patrolBranch));
-
-        //  Passing the blackboard through the tree.
-        m_tree.PassBlackboard(blackBoard);
-
-        void TestSetTargetToPredictedLocation()
-        {
-            m_targetMemory.SetTarget(m_threatMemory.locationPrediction);
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        m_selfMemory.Update(transform, m_agent.velocity);
-        m_timeMemory.deltaTime = Time.fixedDeltaTime;
-
-        m_tree?.Tick();
     }
 
     private bool RegisterPlayerUponDetection()
@@ -138,7 +113,7 @@ public class Guard : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         if (!Application.isPlaying) return;
-        m_tree.Draw(transform.position);
+        m_tree.Draw(transform.position+ Vector3.up * m_agent.height);
         m_threatMemory.Draw();
     }
 }
