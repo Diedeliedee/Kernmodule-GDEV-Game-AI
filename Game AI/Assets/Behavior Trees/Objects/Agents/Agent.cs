@@ -5,13 +5,10 @@ using UnityEngine.AI;
 
 public abstract class Agent : MonoBehaviour
 {
-    [Header("Movement Properties:")]
-    [SerializeField] private float m_targetRadius = 0.5f;
-
     //  Tree info streaming or something:
     protected SelfMemory m_selfMemory = new();
     protected TimeMemory m_timeMemory = new();
-    protected TargetMemory m_targetMemory = null;
+    protected TargetMemory m_targetMemory = new();
 
     //  Components:
     protected BehaviorTree m_tree;
@@ -22,8 +19,6 @@ public abstract class Agent : MonoBehaviour
 
     protected virtual void Awake()
     {
-        m_targetMemory = new(m_targetRadius);
-
         m_agent = GetComponent<NavMeshAgent>();
         m_animator = GetComponent<Animator>();
     }

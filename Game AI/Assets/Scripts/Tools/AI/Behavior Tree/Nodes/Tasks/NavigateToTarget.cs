@@ -22,7 +22,7 @@ namespace Joeri.Tools.AI.BehaviorTree
         public override State OnUpdate()
         {
             m_agent.SetDestination(m_memory.target);
-            if (m_agent.pathPending || m_agent.remainingDistance > m_memory.epsilon) return State.Running;
+            if (m_agent.pathPending || m_agent.remainingDistance > m_agent.stoppingDistance) return State.Running;
             return State.Succes;
         }
 
