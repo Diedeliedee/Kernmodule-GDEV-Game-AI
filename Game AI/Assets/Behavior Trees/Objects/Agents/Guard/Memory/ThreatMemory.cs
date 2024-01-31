@@ -2,22 +2,25 @@
 
 public class ThreatMemory
 {
-    public Transform threat = null;
     public Vector3 lastSeenThreatLocation = default;
     public Vector3 locationPrediction = default;
 
-    public bool hasSeenThreat => threat != null;
+    public bool hasSeenThreat { get; private set; }
 
-    public void RegisterThreat(Transform _threat, Vector3 _velocity, float _aheadTime)
+    public void RegisterThreat()
     {
-        threat = _threat;
+        hasSeenThreat = true;
+    }
+
+    public void UpdateThreatInfo(Transform _threat, Vector3 _velocity, float _aheadTime)
+    {
         lastSeenThreatLocation = _threat.position;
         locationPrediction = lastSeenThreatLocation + _velocity * _aheadTime;
     }
 
     public void Forget()
     {
-        threat = null;
+        hasSeenThreat = false;
         lastSeenThreatLocation = default;
         locationPrediction = default;
     }

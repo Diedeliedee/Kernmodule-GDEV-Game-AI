@@ -133,21 +133,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c57f348e42646b4091d49d27b0a283d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_detectionRange: 10
-  m_fieldOfView: 90
+  m_targetRadius: 1
   m_detectionResolution: 10
   m_predictionInSeconds: 0.5
   m_damageRange: 3
-  m_targetRadius: 1
   m_checkpoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_pickup: {fileID: 0}
   m_holster: {fileID: 3355447219627236636}
-  m_player: {fileID: 0}
-  m_detection: {fileID: 3210266003806920970}
 --- !u!195 &3296650084969280278
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -159,7 +154,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.4
   m_Speed: 5
-  m_Acceleration: 8.5
+  m_Acceleration: 14
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 0
@@ -485,7 +480,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_accuracy: 100
-  m_drawRays: 0
+  m_debugMode: 0
 --- !u!108 &2343411024544775094
 Light:
   m_ObjectHideFlags: 0
@@ -587,7 +582,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1173420182910059089
 Transform:
   m_ObjectHideFlags: 0

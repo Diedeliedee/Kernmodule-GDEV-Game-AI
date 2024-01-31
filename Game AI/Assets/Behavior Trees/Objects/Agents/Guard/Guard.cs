@@ -2,6 +2,7 @@
 using UnityEngine.AI;
 using Joeri.Tools.AI.BehaviorTree;
 using Joeri.Tools.Patterns;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Guard : Agent
 {
@@ -24,6 +25,9 @@ public class Guard : Agent
     private WeaponPickup m_pickup;
     private PlayerMovement m_player;
     private PlayerDetection m_detection;
+
+    public bool isAlerted => m_threatMemory.hasSeenThreat;
+    public bool isAttacking => m_animator.GetCurrentAnimatorStateInfo(0).IsName("ANIM_Attack");
 
     protected override void Awake()
     {
@@ -86,28 +90,25 @@ public class Guard : Agent
         return new BehaviorTree(
             new Selector(
                 new Sequence(
-                    new Condition(() => RegisterPlayerUponDetection()),
+                    new IsAnimationPlaying("ANIM_Startled"),
+                    new Wait()),
+                new Sequence(
+                    new Condition(() => m_detection.PlayerDetected()),
+                    new Action(() => m_threatMemory.UpdateThreatInfo(m_player.transform, m_player.velocity, m_predictionInSeconds)),
                     new Selector(
-                        armBranch,
-                        chaseBranch)),
+                        new Sequence(
+                            new Condition(() => !m_threatMemory.hasSeenThreat),
+                            new Action(() => m_threatMemory.RegisterThreat()),
+                            new Action(() => m_animator.CrossFade("ANIM_Startled", 0f))),
+                        new Selector(
+                            armBranch,
+                            chaseBranch))),
                 new Sequence(
                     new Condition(() => m_threatMemory.hasSeenThreat),
                     new Selector(
                         armBranch,
                         searchBranch)),
                 patrolBranch));
-    }
-
-    private bool RegisterPlayerUponDetection()
-    {
-        var playerSpotted = m_detection.PlayerDetected(out PlayerMovement _player);
-
-        if (playerSpotted)
-        {
-            m_threatMemory.RegisterThreat(_player.transform, _player.velocity, m_predictionInSeconds);
-            return true;
-        }
-        return false;
     }
 
     private void OnDrawGizmosSelected()
