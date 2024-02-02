@@ -4,7 +4,7 @@
     {
         private System.Action m_action = null;
 
-        public Action(System.Action _action)
+        public Action(System.Action _action, string _name = "") : base(_name)
         {
             m_action = _action;
         }

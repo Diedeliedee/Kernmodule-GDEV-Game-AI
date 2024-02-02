@@ -7,7 +7,7 @@ namespace Joeri.Tools.AI.BehaviorTree
         private Transform m_target = default;
         private float m_range = 0f;
 
-        public InRangeOf(Transform _target, float _range)
+        public InRangeOf(Transform _target, float _range, string _name = "") : base(_name)
         {
             m_target = _target;
             m_range = _range;

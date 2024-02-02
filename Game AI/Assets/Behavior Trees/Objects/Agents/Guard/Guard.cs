@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using UnityEngine.AI;
-using Joeri.Tools.AI.BehaviorTree;
+﻿using Joeri.Tools.AI.BehaviorTree;
 using Joeri.Tools.Patterns;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine;
 
 public class Guard : Agent
 {
@@ -61,8 +59,8 @@ public class Guard : Agent
                     new IsAnimationPlaying("ANIM_Attack")),
                 new SetTarget(m_player.transform),
                 new PrioritizeSucces(
-                    new NavigateToTarget("Navigating to player.")),
-                new InRangeOf(m_player.transform, m_damageRange),
+                    new NavigateToTarget()),
+                new InRangeOf(m_player.transform, m_damageRange, "Chasing player!!"),
                 new Action(() => m_animator.CrossFade("ANIM_Attack", 0f))));
 
         //  Constructing the branch run when the guard needs to arm themselves.
@@ -114,7 +112,7 @@ public class Guard : Agent
     private void OnDrawGizmosSelected()
     {
         if (!Application.isPlaying) return;
-        m_tree.Draw(transform.position+ Vector3.up * m_agent.height);
+        m_tree.Draw(transform.position + Vector3.up * m_agent.height);
         m_threatMemory.Draw();
     }
 }

@@ -4,7 +4,7 @@
     {
         private EmptyPredicate m_condition = null;
 
-        public Condition(EmptyPredicate _condition)
+        public Condition(EmptyPredicate _condition, string _name = "") : base(_name)
         {
             m_condition = _condition;
         }

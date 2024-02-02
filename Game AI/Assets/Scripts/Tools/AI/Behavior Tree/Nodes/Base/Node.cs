@@ -2,11 +2,12 @@
 
 namespace Joeri.Tools.AI.BehaviorTree
 {
-    public abstract class Node : INode
+    public abstract class Node
     {
         public Node parent { get; private set; }
         public Patterns.FittedBlackboard board { get; private set; }
 
+        /// <returns>The state that the evaluation resulted in.</returns>
         public abstract State Evaluate();
 
         /// <summary>

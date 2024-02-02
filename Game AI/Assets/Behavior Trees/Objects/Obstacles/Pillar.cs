@@ -2,8 +2,6 @@
 
 public class Pillar : MonoBehaviour, IHidingCover
 {
-    [SerializeField] private float m_hidingDistance = 0.5f;
-
     private CapsuleCollider m_collider = null;
 
     public Vector3 position => transform.position;
@@ -13,8 +11,9 @@ public class Pillar : MonoBehaviour, IHidingCover
         m_collider = GetComponentInChildren<CapsuleCollider>();
     }
 
-    public Vector3 GetHidingPosition(Vector3 _from)
+    public Vector3 GetHidingPosition(Vector3 _from, out Vector3 _normal)
     {
-        return transform.position + ((transform.position - _from).normalized * (m_collider.radius + m_hidingDistance));
+        _normal = (transform.position - _from).normalized;
+        return transform.position + _normal * m_collider.radius;
     }
 }
