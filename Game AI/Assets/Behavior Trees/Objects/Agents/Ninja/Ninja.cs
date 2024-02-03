@@ -1,7 +1,9 @@
 ﻿using Joeri.Tools.AI.BehaviorTree;
+using Joeri.Tools.Utilities;
 using Joeri.Tools.Patterns;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Ninja : Agent
 {
@@ -9,6 +11,7 @@ public class Ninja : Agent
     [SerializeField] private float m_distanceFromHidingSpot = 1f;
     [SerializeField] private float m_guardDetectionRange = 10f;
     [SerializeField] private float m_straightPathEpsilon = 1f;
+    [SerializeField] private float m_straightLookEpsilon = 30f;
 
     private SmokebombHandler m_bomb = null;
 
@@ -16,6 +19,9 @@ public class Ninja : Agent
     private PlayerMovement m_player = null;
     private Guard m_guard = null;
 
+
+    private IHidingCover m_chosenHidingSpot = null;
+    private bool m_sawGuardAttack = false;
 
     protected override void Awake()
     {
@@ -39,28 +45,38 @@ public class Ninja : Agent
             new Action(SetPlayerFollowPosition, "Setting target to Player perimeter."),
             new NavigateToTarget("Following player."));
 
-        var hideBranch = new Routine(
-            new Action(() => m_targetMemory.SetTarget(GetOptimalHidingPosition(out Vector3 _normal))),
-            new NavigateToTarget("Moving to hiding spot!"));
+        var hideBranch = new NonFailable(
+            new Routine(
+                new Action(() => m_chosenHidingSpot = GetOptimalHidingSpot(), "Choosing optimal hiding spot."),
+                new Sequence(
+                    new Action(() => m_targetMemory.SetTarget(m_chosenHidingSpot.GetHidingPosition(m_guard.transform.position, out Vector3 _normal) + _normal * m_distanceFromHidingSpot), "Setting Target to hiding spot!"),
+                    new NavigateToTarget("Moving to hiding spot!"),
+                    new PrioritizeRunning(
+                        new Condition(IsGuardInRange, "Can I still see the guard?")))));
 
         var throwBranch = new NonFailable(
             new Sequence(
-                new Action(() => m_targetMemory.SetTarget(m_guard.transform.position)),
-                new NavigateToTarget(),
-                new Condition(PathIsStraight, "Peeking to throw smokebomb.."),
-                new Action(() => m_bomb.ThrowBombTo(m_guard.transform.position), "Throwing bomb!")));
+                new Action(() => m_targetMemory.SetTarget(m_guard.transform.position), "Setting Target to guard!"),
+                new PrioritizeSucces(
+                    new NavigateToTarget("Peeking to throw smokebomb..")),
+                new Condition(IsGuardVisible, "Can I throw from here?"),
+                new Action(() => m_bomb.ThrowBombTo(m_guard.transform.position), "Throwing bomb!"),
+                new Action(() => m_sawGuardAttack = false, "Forgetting Guard's attack..")));
 
         return new BehaviorTree(
             new Selector(
                 new Sequence(
+                    new Condition(() => m_sawGuardAttack),
+                    new Condition(() => m_bomb.canThrow),
+                    throwBranch),
+                new Sequence(
                     new Condition(() => m_guard.isAlerted),
-                    new Selector(
+                    new AlwaysSucces(
                         new Sequence(
-                            new Condition(() => m_guard.isAttacking, "Waiting for Guard to attack."),
-                            new Condition(() => m_bomb.canThrow, "Waiting for smokebomb to recharge.."),
-                            throwBranch),
-                        hideBranch)),
-                followBranch));
+                            new Condition(() => m_guard.isAttacking),
+                            new Action(() => m_sawGuardAttack = true))),
+                    hideBranch),
+                    followBranch));
     }
 
     private void SetPlayerFollowPosition()
@@ -70,13 +86,12 @@ public class Ninja : Agent
         m_targetMemory.SetTarget(position);
     }
 
-    private void SetPeekPosition()
+    private bool IsGuardVisible()
     {
+        //  Maybe move this to be a spherecast in the bomb handler itself.
 
-    }
-
-    private bool PathIsStraight()
-    {
+        if (Vector2.Angle(transform.position.Planar().ToDirection(m_guard.transform.position.Planar()), transform.forward.Planar()) > m_straightLookEpsilon) return false;
+        if (m_agent.path.corners.Length < 2) return false;
         for (int i = 0; i < m_agent.path.corners.Length; i++)
         {
             if (i == 0) continue;
@@ -85,39 +100,36 @@ public class Ninja : Agent
             var partialDir = corners[i] - corners[i - 1];
             var pathDir = corners[^1] - corners[0];
 
-            if (Vector3.Angle(partialDir, pathDir) > m_straightPathEpsilon) return false;
+            if (Vector2.Angle(partialDir.Planar(), pathDir.Planar()) > m_straightPathEpsilon) return false;
         }
         return true;
     }
 
-    private Vector3 GetOptimalHidingPosition(out Vector3 _normal)
+    private bool IsGuardInRange()
+    {
+        var distance = Vector2.Distance(transform.position.Planar(), m_guard.transform.position.Planar());
+
+        return distance < m_guardDetectionRange;
+    }
+
+    private IHidingCover GetOptimalHidingSpot()
     {
         var targetPos = m_guard.transform.position;
-        var hidingSpots = new List<IHidingCover>(m_hidingCovers.Length);
         var closestHidingSpot = m_hidingCovers[0];
         var smallestDistance = Mathf.Infinity;
 
-        for (int i = 0; i < hidingSpots.Count; i++)
+        for (int i = 0; i < m_hidingCovers.Length; i++)
         {
-            var sqrDistance = (hidingSpots[i].position - targetPos).sqrMagnitude;
-
-            //  Cull out hiding spots too far away to be valid.
-            if (sqrDistance > m_guardDetectionRange * m_guardDetectionRange)
-            {
-                hidingSpots.RemoveAt(i);
-                --i;
-                continue;
-            }
+            var sqrDistance = (m_hidingCovers[i].position - targetPos).sqrMagnitude;
 
             //  Compare, and replace if pillar is closer.
             if (sqrDistance < smallestDistance)
             {
-                closestHidingSpot = hidingSpots[i];
+                closestHidingSpot = m_hidingCovers[i];
                 smallestDistance = sqrDistance;
             }
         }
-
-        return closestHidingSpot.GetHidingPosition(targetPos, out _normal) + _normal * m_distanceFromHidingSpot;
+        return closestHidingSpot;
     }
 
     private void OnDrawGizmosSelected()

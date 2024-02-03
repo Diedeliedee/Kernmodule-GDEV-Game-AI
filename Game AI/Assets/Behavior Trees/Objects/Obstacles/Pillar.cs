@@ -14,6 +14,8 @@ public class Pillar : MonoBehaviour, IHidingCover
     public Vector3 GetHidingPosition(Vector3 _from, out Vector3 _normal)
     {
         _normal = (transform.position - _from).normalized;
-        return transform.position + _normal * m_collider.radius;
+        var pos = transform.position + _normal * m_collider.radius;
+        pos.y = 0;
+        return pos;
     }
 }

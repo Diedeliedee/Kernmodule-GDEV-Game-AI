@@ -16,7 +16,9 @@ namespace Joeri.Tools.AI.BehaviorTree
                 switch (children[m_index].Evaluate())
                 {
                     //  If any child has failed, the routine is broken.
-                    case State.Failure: return State.Failure;
+                    case State.Failure:
+                        m_index = 0;
+                        return State.Failure;
 
                     // If any child is running, the routine is still running too.
                     case State.Running: return State.Running;

@@ -27,7 +27,7 @@ public class PlayerDetection : MonoBehaviour
             transform.Rotate(randomOffset.x, randomOffset.y, 0f, Space.Self);
 
             //  Cast a ray, and continue to the next iteration if neither anything has been hit, or whatever's been hit isn't a player.
-            if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit _hit, m_light.range, m_mask))
+            if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit _hit, m_light.range, m_mask, QueryTriggerInteraction.Collide))
             {
                 if (m_debugMode) Debug.DrawRay(transform.position, transform.forward * m_light.range);
                 transform.localRotation = originalRotation;
