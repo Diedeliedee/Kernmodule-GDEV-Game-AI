@@ -26,6 +26,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rightDirection = Vector3.Cross(Vector3.up, forwardDirection.normalized);
 
         var moveDirection = forwardDirection.normalized * vert + rightDirection.normalized * hor;
-        transform.position += Vectors.FlatToVector(m_flatAcceleration.CalculateVelocity(Vectors.VectorToFlat(moveDirection.normalized) * moveSpeed, moveGrip, deltaTime) * deltaTime);
+        transform.position += (m_flatAcceleration.CalculateVelocity(moveDirection.normalized.Planar() * moveSpeed, moveGrip, deltaTime) * deltaTime).Cubular();
     }
 }
