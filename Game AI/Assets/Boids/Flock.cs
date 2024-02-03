@@ -22,7 +22,7 @@ public class Flock : MonoBehaviour, IFlock
         //  Spawn the boids.
         for (int i = 0; i < m_boidAmount; i++)
         {
-            Instantiate(m_boid, transform.position + Vectors.RandomSpherePoint(m_spawnRadius), Quaternion.identity, transform);
+            Instantiate(m_boid, transform.position + Util.RandomSpherePoint(m_spawnRadius), Quaternion.identity, transform);
         }
 
         //  Gather all boids in an array.

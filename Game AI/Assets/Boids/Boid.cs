@@ -30,7 +30,7 @@ public class Boid : MonoBehaviour, IBoid
             new MoveToPoint(m_flock.transform.position, m_settings.centerAttractionForce),
             new StayInArea(m_flock.transform.position, m_flock.areaRadius, m_settings.boundaryOpposingForce));
 
-        transform.LookAt(transform.position += Vectors.RandomSpherePoint(1f).normalized);
+        transform.LookAt(transform.position += Util.RandomSpherePoint(1f).normalized);
     }
 
     public void Tick(float _deltaTime)
