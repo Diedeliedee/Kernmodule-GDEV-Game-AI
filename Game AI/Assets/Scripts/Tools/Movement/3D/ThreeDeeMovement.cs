@@ -116,7 +116,7 @@ namespace Joeri.Tools.Movement.ThreeDee
         /// </summary>
         public void RotateToDir(Vector2 dir, float deltaTime)
         {
-            RotateToAngle(Vectors.VectorToAngle(dir), deltaTime);
+            RotateToAngle(dir.ToAngle(), deltaTime);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Joeri.Tools.Movement.ThreeDee
         }
 
         [System.Serializable]
-        public class Settings : BaseHandler.Settings
+        new public class Settings : BaseHandler.Settings
         {
             [Space]
             [Min(0f)] public float baseRotationTime;

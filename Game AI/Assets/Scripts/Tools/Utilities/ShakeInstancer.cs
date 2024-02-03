@@ -94,7 +94,7 @@ namespace Joeri.Tools
 
             if (m_frequency < Mathf.Infinity && !m_tickTimer.ResetOnReach(deltaTime)) return m_currentOffset;   //  Wait until the timer has reached it's end.
             
-            m_currentOffset = Vectors.RandomSpherePoint(m_magnitude);                                           //  Create new offset.
+            m_currentOffset = Util.RandomSpherePoint(m_magnitude);                                              //  Create new offset.
             return m_currentOffset;                                                                             //  Return the offset.
         }
 

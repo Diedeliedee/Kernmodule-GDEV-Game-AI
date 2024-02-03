@@ -79,6 +79,21 @@ namespace Joeri.Tools.Utilities
             probability = Mathf.Clamp01(probability);
             return (Random.Range(0f, 1f) <= probability);
         }
+
+        /// <returns>A random point in a 2D circle, defined by the radius.</returns>
+        public static Vector2 RandomCirclePoint(float radius = 1f)
+        {
+            var r = radius * Mathf.Sqrt(Random.Range(0f, 1f));
+            var whateverthetameans = Random.Range(0f, 1f) * 2 * Mathf.PI;
+
+            return new Vector2(r * Mathf.Cos(whateverthetameans), r * Mathf.Sin(whateverthetameans));
+        }
+
+        /// <returns>A "random" point in a 3D sphere, defined by the radius.</returns>
+        public static Vector3 RandomSpherePoint(float radius = 1f)
+        {
+            return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * radius;
+        }
     }
 }
 

@@ -71,7 +71,7 @@ namespace Joeri.Tools
         {
             var flatOffset = new Vector3(offset.x, 0f, offset.z);
 
-            var yAngle = Vectors.VectorToAngle(new Vector2(offset.x, offset.z));
+            var yAngle = new Vector2(offset.x, offset.z).ToAngle();
             var xAngle = Vector3.SignedAngle(flatOffset, offset, Vector3.Cross(offset, Vector3.up));
 
             var distance = offset.magnitude;
