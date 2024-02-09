@@ -2,7 +2,7 @@
 using Joeri.Tools.Patterns;
 using UnityEngine;
 
-public class Guard : Agent
+public class Guard : Agent, ISmokeInteractable
 {
     [Header("Properties:")]
     [SerializeField] private int m_detectionResolution = 10;
@@ -26,6 +26,7 @@ public class Guard : Agent
 
     public bool isAlerted => m_threatMemory.hasSeenThreat;
     public bool isAttacking => m_animator.GetCurrentAnimatorStateInfo(0).IsName("ANIM_Attack");
+    public bool isBlind => !m_detection.gameObject.activeSelf;
 
     protected override void Awake()
     {
@@ -91,6 +92,7 @@ public class Guard : Agent
                     new IsAnimationPlaying("ANIM_Startled"),
                     new Wait()),
                 new Sequence(
+                    new Condition(() => !isBlind),
                     new Condition(() => m_detection.PlayerDetected()),
                     new Action(() => m_threatMemory.UpdateThreatInfo(m_player.transform, m_player.velocity, m_predictionInSeconds)),
                     new Selector(
@@ -109,10 +111,21 @@ public class Guard : Agent
                 patrolBranch));
     }
 
+    public void OnSmokeEnter()
+    {
+        m_detection.gameObject.SetActive(false);
+    }
+
+    public void OnSmokeExit()
+    {
+        m_detection.gameObject.SetActive(true);
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (!Application.isPlaying) return;
         m_tree.Draw(transform.position + Vector3.up * m_agent.height);
         m_threatMemory.Draw();
     }
+
 }

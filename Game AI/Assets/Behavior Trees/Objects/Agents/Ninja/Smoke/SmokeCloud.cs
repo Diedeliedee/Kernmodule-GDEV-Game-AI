@@ -1,17 +1,16 @@
 using Joeri.Tools;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SmokeCloud : MonoBehaviour
 {
     [SerializeField] private float m_time = 10f;
-    [SerializeField] private MeshRenderer m_renderer;
 
+    private MeshRenderer[] m_renderers;
     private Timer m_timer = null;
 
     private void Awake()
     {
+        m_renderers = GetComponentsInChildren<MeshRenderer>(true);
         m_timer = new Timer(m_time);
     }
 
@@ -23,9 +22,14 @@ public class SmokeCloud : MonoBehaviour
             return;
         }
 
-        var color = m_renderer.material.color;
+        var alpha = m_timer.GetPercent(true) * -1 + 1;
 
-        color.a = m_timer.GetPercent(true) * -1 + 1;
-        m_renderer.material.color = color;
+        foreach (var _renderer in m_renderers)
+        {
+            var color = _renderer.material.color;
+
+            color.a = alpha;
+            _renderer.material.color = color;
+        }
     }
 }
