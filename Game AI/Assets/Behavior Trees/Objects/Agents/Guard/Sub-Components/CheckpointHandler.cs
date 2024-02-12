@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckpointMemory
+public class CheckpointHandler
 {
     public List<Transform> checkpoints = new();
     public int index = 0;
 
-    public CheckpointMemory(params Transform[] _checkpoints)
+    public CheckpointHandler(params Transform[] _checkpoints)
     {
         for (int i = 0; i < _checkpoints.Length; i++) checkpoints.Add(_checkpoints[i]);
     }
@@ -14,7 +14,7 @@ public class CheckpointMemory
     public Transform GetNext()
     {
         ++index;
-        if (index>= checkpoints.Count) index = 0;
+        if (index >= checkpoints.Count) index = 0;
         return checkpoints[index];
     }
 }

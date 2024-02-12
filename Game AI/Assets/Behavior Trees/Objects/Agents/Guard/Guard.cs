@@ -15,16 +15,16 @@ public class Guard : Agent, ISmokeInteractable
     [SerializeField] private GameObject m_holster;
 
     //  Behavior memory:
-    private ThreatMemory m_threatMemory = new();
-    private WeaponMemory m_weaponMemory = new();
-    private CheckpointMemory m_checkpointMemory = null;
+    private ThreatPerception m_threatPerception = new();
+    private WeaponHandler m_weaponHandler = new();
+    private CheckpointHandler m_checkpointHandler = null;
 
     //  References:
     private WeaponPickup m_pickup;
     private PlayerMovement m_player;
     private ColliderOcclusionCheck m_detection;
 
-    public bool isAlerted => m_threatMemory.hasSeenThreat;
+    public bool isAlerted => m_threatPerception.hasSeenThreat;
     public bool isAttacking => m_animator.GetCurrentAnimatorStateInfo(0).IsName("ANIM_Attack");
     public bool isBlind => !m_detection.gameObject.activeSelf;
 
@@ -32,7 +32,7 @@ public class Guard : Agent, ISmokeInteractable
     {
         base.Awake();
 
-        m_checkpointMemory = new(m_checkpoints);
+        m_checkpointHandler = new(m_checkpoints);
 
         m_pickup = FindObjectOfType<WeaponPickup>();
 
@@ -51,7 +51,7 @@ public class Guard : Agent, ISmokeInteractable
     protected override BehaviorTree CreateTree(FittedBlackboard _blackboard)
     {
         //  JOERI, keep in mind that memory classes might no be necessary if a large portion of the tree is doable with actions.
-        _blackboard.Add(m_threatMemory);
+        _blackboard.Add(m_threatPerception);
 
         //  Constructing the branch run when the guard has a weapon and chases the player.
         var chaseBranch = new NonFailable(
@@ -67,23 +67,23 @@ public class Guard : Agent, ISmokeInteractable
         //  Constructing the branch run when the guard needs to arm themselves.
         //  (Add additional hide node when a weapon cannot be located?)
         var armBranch = new Routine(
-            new Condition(() => !m_weaponMemory.hasWeapon),
+            new Condition(() => !m_weaponHandler.hasWeapon),
             new Action(() => m_targetMemory.SetTarget(m_pickup.transform.position)),
             new NavigateToTarget("Navigating to weapon."),
-            new Action(() => { m_weaponMemory.RegisterWeapon(m_pickup.Pickup()); m_holster.SetActive(true); }));
+            new Action(() => { m_weaponHandler.RegisterWeapon(m_pickup.Pickup()); m_holster.SetActive(true); }));
 
         //  Constructing the branch run when the guard is in a patrolling state.
         var patrolBranch = new Routine(
-            new Action(() => m_targetMemory.SetTarget(m_checkpointMemory.GetNext().position)),
+            new Action(() => m_targetMemory.SetTarget(m_checkpointHandler.GetNext().position)),
             new NavigateToTarget("Navigating to next checkpoint."),
             new Wait(1f, "Idling at checkpoint."));
 
         //  Constructing the branch run when the guard has noticed a threat.
         var searchBranch = new Routine(
-            new Action(() => m_targetMemory.SetTarget(m_threatMemory.locationPrediction)),
+            new Action(() => m_targetMemory.SetTarget(m_threatPerception.locationPrediction)),
             new NavigateToTarget("Searching for player.."),
             new Wait(3f, "Must've been the wind."),
-            new Action(() => m_threatMemory.Forget()));
+            new Action(() => m_threatPerception.Forget()));
 
         //  Constructing general tree.
         return new BehaviorTree(
@@ -94,17 +94,17 @@ public class Guard : Agent, ISmokeInteractable
                 new Sequence(
                     new Condition(() => !isBlind),
                     new Condition(() => m_detection.CanReachTarget(out Vector3 _rayEndPoint)),
-                    new Action(() => m_threatMemory.UpdateThreatInfo(m_player.transform, m_player.velocity, m_predictionInSeconds)),
+                    new Action(() => m_threatPerception.UpdateThreatInfo(m_player.transform, m_player.velocity, m_predictionInSeconds)),
                     new Selector(
                         new Sequence(
-                            new Condition(() => !m_threatMemory.hasSeenThreat),
-                            new Action(() => m_threatMemory.RegisterThreat()),
+                            new Condition(() => !m_threatPerception.hasSeenThreat),
+                            new Action(() => m_threatPerception.RegisterThreat()),
                             new Action(() => m_animator.CrossFade("ANIM_Startled", 0f))),
                         new Selector(
                             armBranch,
                             chaseBranch))),
                 new Sequence(
-                    new Condition(() => m_threatMemory.hasSeenThreat),
+                    new Condition(() => m_threatPerception.hasSeenThreat),
                     new Selector(
                         armBranch,
                         searchBranch)),
@@ -125,7 +125,7 @@ public class Guard : Agent, ISmokeInteractable
     {
         if (!Application.isPlaying) return;
         m_tree.Draw(transform.position + Vector3.up * m_agent.height);
-        m_threatMemory.Draw();
+        m_threatPerception.Draw();
     }
 
 }
