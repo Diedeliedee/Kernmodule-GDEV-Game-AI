@@ -8881,46 +8881,6 @@ PrefabInstance:
       propertyPath: weight
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1054431805}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadScene
-      objectReference: {fileID: 0}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: GameManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Behavior Tree Scene
-      objectReference: {fileID: 0}
-    - target: {fileID: 5842973607003855592, guid: 6b4757250120a30439dc7cf742da36b5,
-        type: 3}
-      propertyPath: m_onDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 7310981473863667420, guid: 6b4757250120a30439dc7cf742da36b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8981,6 +8941,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4757250120a30439dc7cf742da36b5, type: 3}
+--- !u!136 &4827388665895515807 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 8751655386640924924, guid: 6b4757250120a30439dc7cf742da36b5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4827388665895515806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6236200302876261417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9094,6 +9060,11 @@ PrefabInstance:
       propertyPath: m_checkpoints.Array.data[3]
       value: 
       objectReference: {fileID: 1817478150}
+    - target: {fileID: 8966011033513269214, guid: a68623a68704ef54198621979ec3e593,
+        type: 3}
+      propertyPath: m_target
+      value: 
+      objectReference: {fileID: 4827388665895515807}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Joeri.Tools.Utilities;
+using UnityEngine;
 
 [RequireComponent(typeof(Light))]
 public class PlayerDetection : MonoBehaviour
@@ -21,7 +22,7 @@ public class PlayerDetection : MonoBehaviour
 
         for (int i = 0; i < m_accuracy; i++)
         {
-            var randomOffset = RandomOffset() * offset;
+            var randomOffset = Util.RandomCirclePoint(m_accuracy) * offset;
 
             //  Apply random offset to euler angles of camera.
             transform.Rotate(randomOffset.x, randomOffset.y, 0f, Space.Self);
@@ -46,18 +47,5 @@ public class PlayerDetection : MonoBehaviour
             }
         }
         return false;
-    }
-
-    private Vector2 RandomOffset()
-    {
-        var offset = Vector2.zero;
-
-        for (int i = 0; i < m_accuracy; i++)
-        {
-            offset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-            if (offset.sqrMagnitude > 1f) continue;
-            break;
-        }
-        return offset;
     }
 }

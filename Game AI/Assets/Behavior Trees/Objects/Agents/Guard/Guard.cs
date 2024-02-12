@@ -22,7 +22,7 @@ public class Guard : Agent, ISmokeInteractable
     //  References:
     private WeaponPickup m_pickup;
     private PlayerMovement m_player;
-    private PlayerDetection m_detection;
+    private ColliderOcclusionCheck m_detection;
 
     public bool isAlerted => m_threatMemory.hasSeenThreat;
     public bool isAttacking => m_animator.GetCurrentAnimatorStateInfo(0).IsName("ANIM_Attack");
@@ -37,7 +37,7 @@ public class Guard : Agent, ISmokeInteractable
         m_pickup = FindObjectOfType<WeaponPickup>();
 
         m_player = FindObjectOfType<PlayerMovement>();
-        m_detection = GetComponentInChildren<PlayerDetection>();
+        m_detection = GetComponentInChildren<ColliderOcclusionCheck>();
     }
 
     private void FixedUpdate()
@@ -93,7 +93,7 @@ public class Guard : Agent, ISmokeInteractable
                     new Wait()),
                 new Sequence(
                     new Condition(() => !isBlind),
-                    new Condition(() => m_detection.PlayerDetected()),
+                    new Condition(() => m_detection.CanReachTarget(out Vector3 _rayEndPoint)),
                     new Action(() => m_threatMemory.UpdateThreatInfo(m_player.transform, m_player.velocity, m_predictionInSeconds)),
                     new Selector(
                         new Sequence(

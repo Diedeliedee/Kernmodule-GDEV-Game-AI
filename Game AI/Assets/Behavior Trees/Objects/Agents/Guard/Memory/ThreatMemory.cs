@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Joeri.Tools.Debugging;
+using UnityEngine;
 
 public class ThreatMemory
 {
@@ -27,10 +28,7 @@ public class ThreatMemory
 
     public void Draw()
     {
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere(lastSeenThreatLocation, 0.5f);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(locationPrediction, 0.5f);
+        GizmoTools.DrawOutlinedDisc(lastSeenThreatLocation, 0.5f, Color.white, Color.white, 0.25f);
+        GizmoTools.DrawOutlinedDisc(locationPrediction, 0.5f, Color.green, Color.white, 0.5f);
     }
 }

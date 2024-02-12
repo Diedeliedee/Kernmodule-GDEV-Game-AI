@@ -80,13 +80,27 @@ namespace Joeri.Tools.Utilities
             return (Random.Range(0f, 1f) <= probability);
         }
 
-        /// <returns>A random point in a 2D circle, defined by the radius.</returns>
-        public static Vector2 RandomCirclePoint(float radius = 1f)
+        /// <returns>A random point in a 2D circle.</returns>
+        public static Vector2 RandomCirclePoint()
         {
-            var r = radius * Mathf.Sqrt(Random.Range(0f, 1f));
-            var whateverthetameans = Random.Range(0f, 1f) * 2 * Mathf.PI;
+            var r = Mathf.Sqrt(Random.Range(0f, 1f));
+            var t = Random.Range(0f, 1f) * 2 * Mathf.PI;
 
-            return new Vector2(r * Mathf.Cos(whateverthetameans), r * Mathf.Sin(whateverthetameans));
+            return new Vector2(r * Mathf.Cos(t), r * Mathf.Sin(t));
+        }
+
+        /// <returns>A random point in a 2D circle without using square root.</returns>
+        public static Vector2 RandomCirclePoint(int accuracy)
+        {
+            var offset = Vector2.zero;
+
+            for (int i = 0; i < accuracy; i++)
+            {
+                offset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                if (offset.sqrMagnitude > 1f) continue;
+                break;
+            }
+            return offset;
         }
 
         /// <returns>A "random" point in a 3D sphere, defined by the radius.</returns>
