@@ -89,11 +89,11 @@ public class Guard : Agent, ISmokeInteractable
         return new BehaviorTree(
             new Selector(
                 new Sequence(
+                    new IsAnimationPlaying("ANIM_Startled"),
+                    new Wait()),
+                new Sequence(
                     new Condition(() => GameManager.instance.state == GameManager.State.Running),
                     new Selector(
-                        new Sequence(
-                            new IsAnimationPlaying("ANIM_Startled"),
-                            new Wait()),
                         new Sequence(
                             new Condition(() => !isBlind),
                             new Condition(() => m_detection.CanReachTarget(out Vector3 _rayEndPoint)),
