@@ -15,6 +15,12 @@ public class ColliderOcclusionCheck : MonoBehaviour
         var direction = (target - transform.position).normalized;
 
         _rayEndPoint = transform.position + direction * distance;
+
+        if (Vector3.Angle(transform.forward, direction) > m_angle)
+        {
+            _rayEndPoint = transform.position;
+            return false;
+        }
         if (distance > m_distance)
         {
             _rayEndPoint = transform.position + direction * m_distance;

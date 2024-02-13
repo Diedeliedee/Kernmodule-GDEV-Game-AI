@@ -104,7 +104,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Player Volume
+    path: Damage Effect
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -115,12 +115,12 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: -5.7030616
-        outSlope: -5.7030616
+        inSlope: -5.8789573
+        outSlope: -5.8789573
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.04399323
+        outWeight: 0.031249993
       - serializedVersion: 3
         time: 0.5
         value: 0
@@ -134,7 +134,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: weight
-    path: Player Volume
+    path: Damage Effect
     classID: 114
     script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
     flags: 0
@@ -156,7 +156,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2288563457
+      path: 191391712
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -165,7 +165,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 2288563457
+      path: 191391712
       attribute: 130897217
       script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
       typeID: 114
@@ -392,7 +392,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Player Volume
+    path: Damage Effect
     classID: 1
     script: {fileID: 0}
     flags: 0
@@ -403,12 +403,12 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 1
-        inSlope: -5.7030616
-        outSlope: -5.7030616
+        inSlope: -5.8789573
+        outSlope: -5.8789573
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
-        outWeight: 0.04399323
+        outWeight: 0.031249993
       - serializedVersion: 3
         time: 0.5
         value: 0
@@ -422,7 +422,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: weight
-    path: Player Volume
+    path: Damage Effect
     classID: 114
     script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
     flags: 0

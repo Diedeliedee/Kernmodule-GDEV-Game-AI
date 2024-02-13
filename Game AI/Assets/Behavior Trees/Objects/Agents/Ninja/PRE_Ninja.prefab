@@ -595,6 +595,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Footsteps
       objectReference: {fileID: 0}
+    - target: {fileID: 6470990932277238604, guid: e202b484b5f4b284e89c9a865581dac0,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 99388b59aeef77d4983da3934d7181d9, type: 3}
     - target: {fileID: 7930387787180174076, guid: e202b484b5f4b284e89c9a865581dac0,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using Joeri.Tools.Debugging;
+using UnityEditor;
 using UnityEngine;
 
 namespace Joeri.Tools.AI.BehaviorTree
@@ -69,7 +70,7 @@ namespace Joeri.Tools.AI.BehaviorTree
 
         public override void OnDraw(Vector3 _center)
         {
-            Handles.Label(_center, m_name);
+            GizmoTools.DrawLabel(_center, m_name, Color.white);
         }
     }
 }
