@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 5842973607003855592}
   - component: {fileID: 7977809689691191932}
   - component: {fileID: 3755727083039854675}
+  - component: {fileID: 5925308393553741155}
   - component: {fileID: 4956558462021821403}
   - component: {fileID: 408073369606760497}
   m_Layer: 3
@@ -420,6 +421,19 @@ MonoBehaviour:
   m_pitchRange: 85
   m_camera: {fileID: 1242806645562571406}
   m_pivot: {fileID: 7310981473863667420}
+--- !u!114 &5925308393553741155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8248974444229853495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc5d31649a3a70a45be9c94a9699d3f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_smokeDensity: 0.6
 --- !u!95 &4956558462021821403
 Animator:
   serializedVersion: 5

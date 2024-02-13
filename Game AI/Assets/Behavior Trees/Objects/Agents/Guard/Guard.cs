@@ -119,6 +119,8 @@ public class Guard : Agent, ISmokeInteractable
         m_detection.gameObject.SetActive(false);
     }
 
+    public void OnSmokeStay(float _smokeDensity) { }
+
     public void OnSmokeExit()
     {
         m_detection.gameObject.SetActive(true);
@@ -130,4 +132,5 @@ public class Guard : Agent, ISmokeInteractable
         m_tree.Draw(transform.position + Vector3.up * m_agent.height);
         m_threatPerception.Draw();
     }
+
 }

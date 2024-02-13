@@ -12,6 +12,14 @@ public class SmokeCollider : MonoBehaviour
         _interactable.OnSmokeEnter();
     }
 
+    public void Tick(float _smokeDensity)
+    {
+        foreach (var envelopedObject in m_envelopedObjects)
+        {
+            envelopedObject.OnSmokeStay(_smokeDensity);
+        }  
+    }
+
     private void OnTriggerExit(Collider other)
     {
         if (!other.TryGetComponent(out ISmokeInteractable _interactable)) return;

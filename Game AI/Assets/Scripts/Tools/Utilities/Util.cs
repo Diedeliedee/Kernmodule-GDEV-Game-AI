@@ -41,7 +41,7 @@ namespace Joeri.Tools.Utilities
         }
 
         /// <returns>The passed in 0-1 integer, but swapped in value.</returns>
-        public static float Reverse01(float current)
+        public static float OneMinus(float current)
         {
             return current * -1 + 1;
         }
