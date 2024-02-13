@@ -9050,11 +9050,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AI_Guard
       objectReference: {fileID: 0}
-    - target: {fileID: 2343411024544775094, guid: a68623a68704ef54198621979ec3e593,
-        type: 3}
-      propertyPath: m_Shadows.m_Type
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3210266003806920970, guid: a68623a68704ef54198621979ec3e593,
         type: 3}
       propertyPath: m_debugMode
