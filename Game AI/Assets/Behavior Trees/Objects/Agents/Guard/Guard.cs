@@ -89,25 +89,28 @@ public class Guard : Agent, ISmokeInteractable
         return new BehaviorTree(
             new Selector(
                 new Sequence(
-                    new IsAnimationPlaying("ANIM_Startled"),
-                    new Wait()),
-                new Sequence(
-                    new Condition(() => !isBlind),
-                    new Condition(() => m_detection.CanReachTarget(out Vector3 _rayEndPoint)),
-                    new Action(() => m_threatMemory.UpdateThreatInfo(m_player.transform, m_player.velocity, m_predictionInSeconds)),
+                    new Condition(() => GameManager.instance.state == GameManager.State.Running),
                     new Selector(
                         new Sequence(
-                            new Condition(() => !m_threatMemory.hasSeenThreat),
-                            new Action(() => m_threatMemory.RegisterThreat()),
-                            new Action(() => m_animator.CrossFade("ANIM_Startled", 0f))),
-                        new Selector(
-                            armBranch,
-                            chaseBranch))),
-                new Sequence(
-                    new Condition(() => m_threatMemory.hasSeenThreat),
-                    new Selector(
-                        armBranch,
-                        searchBranch)),
+                            new IsAnimationPlaying("ANIM_Startled"),
+                            new Wait()),
+                        new Sequence(
+                            new Condition(() => !isBlind),
+                            new Condition(() => m_detection.CanReachTarget(out Vector3 _rayEndPoint)),
+                            new Action(() => m_threatMemory.UpdateThreatInfo(m_player.transform, m_player.velocity, m_predictionInSeconds)),
+                            new Selector(
+                                new Sequence(
+                                    new Condition(() => !m_threatMemory.hasSeenThreat),
+                                    new Action(() => m_threatMemory.RegisterThreat()),
+                                    new Action(() => m_animator.CrossFade("ANIM_Startled", 0f))),
+                                new Selector(
+                                    armBranch,
+                                    chaseBranch))),
+                        new Sequence(
+                            new Condition(() => m_threatMemory.hasSeenThreat),
+                            new Selector(
+                                armBranch,
+                                searchBranch)))),
                 patrolBranch));
     }
 
