@@ -8981,9 +8981,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b4757250120a30439dc7cf742da36b5, type: 3}
---- !u!136 &4827388665895515807 stripped
-CapsuleCollider:
-  m_CorrespondingSourceObject: {fileID: 8751655386640924924, guid: 6b4757250120a30439dc7cf742da36b5,
+--- !u!143 &4827388665895515812 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 408073369606760497, guid: 6b4757250120a30439dc7cf742da36b5,
     type: 3}
   m_PrefabInstance: {fileID: 4827388665895515806}
   m_PrefabAsset: {fileID: 0}
@@ -9099,7 +9099,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_target
       value: 
-      objectReference: {fileID: 4827388665895515807}
+      objectReference: {fileID: 4827388665895515812}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

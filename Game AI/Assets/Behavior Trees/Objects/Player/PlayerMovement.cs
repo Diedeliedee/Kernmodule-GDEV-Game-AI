@@ -12,10 +12,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform m_camera;
 
     private Accel.Flat m_flatAcceleration = new();
+    private CharacterController m_controller = null;
 
     public Vector3 velocity => new Vector3(m_flatAcceleration.velocity.x, 0f, m_flatAcceleration.velocity.y);
 
-    // Update is called once per frame
+    private void Awake()
+    {
+        m_controller = GetComponent<CharacterController>();
+    }
+
     private void Update()
     {
         var deltaTime = Time.deltaTime;
@@ -26,6 +31,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 rightDirection = Vector3.Cross(Vector3.up, forwardDirection.normalized);
 
         var moveDirection = forwardDirection.normalized * vert + rightDirection.normalized * hor;
-        transform.position += (m_flatAcceleration.CalculateVelocity(moveDirection.normalized.Planar() * moveSpeed, moveGrip, deltaTime) * deltaTime).Cubular();
+        m_controller.Move((m_flatAcceleration.CalculateVelocity(moveDirection.normalized.Planar() * moveSpeed, moveGrip, deltaTime) * deltaTime).Cubular());
     }
 }
