@@ -1,7 +1,7 @@
 ﻿using Joeri.Tools.Debugging;
 using UnityEngine;
 
-public class ThreatMemory
+public class ThreatPerception
 {
     public Vector3 lastSeenThreatLocation = default;
     public Vector3 locationPrediction = default;
