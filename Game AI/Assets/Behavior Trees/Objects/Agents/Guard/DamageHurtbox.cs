@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class DamageHurtbox : MonoBehaviour
+namespace GameAI.BehaviorSystem
 {
-    [SerializeField] private int m_damage = 1;
-
-    private void OnTriggerEnter(Collider other)
+    public class DamageHurtbox : MonoBehaviour
     {
-        if (!other.TryGetComponent(out IDamagable _damagable)) return;
-        _damagable.Damage(m_damage);
+        [SerializeField] private int m_damage = 1;
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.TryGetComponent(out IDamagable _damagable)) return;
+            _damagable.Damage(m_damage);
+        }
     }
 }

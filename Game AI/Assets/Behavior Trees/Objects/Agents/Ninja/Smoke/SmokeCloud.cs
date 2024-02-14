@@ -2,39 +2,42 @@ using Joeri.Tools;
 using Joeri.Tools.Utilities;
 using UnityEngine;
 
-public class SmokeCloud : MonoBehaviour
+namespace GameAI.BehaviorSystem
 {
-    [SerializeField] private float m_time = 10f;
-
-    private MeshRenderer[] m_renderers;
-    private SmokeCollider m_collider = null;
-    private Timer m_timer = null;
-
-    private void Awake()
+    public class SmokeCloud : MonoBehaviour
     {
-        m_renderers = GetComponentsInChildren<MeshRenderer>(true);
-        m_collider = GetComponentInChildren<SmokeCollider>(true);
-        m_timer = new Timer(m_time);
-    }
+        [SerializeField] private float m_time = 10f;
 
-    private void Update()
-    {
-        m_collider.Tick(Util.OneMinus(m_timer.percent));
+        private MeshRenderer[] m_renderers;
+        private SmokeCollider m_collider = null;
+        private Timer m_timer = null;
 
-        if (m_timer.HasReached(Time.deltaTime))
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
+            m_renderers = GetComponentsInChildren<MeshRenderer>(true);
+            m_collider = GetComponentInChildren<SmokeCollider>(true);
+            m_timer = new Timer(m_time);
         }
 
-        var alpha = m_timer.GetPercent(true) * -1 + 1;
-
-        foreach (var _renderer in m_renderers)
+        private void Update()
         {
-            var color = _renderer.material.color;
+            m_collider.Tick(Util.OneMinus(m_timer.percent));
 
-            color.a = alpha;
-            _renderer.material.color = color;
+            if (m_timer.HasReached(Time.deltaTime))
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            var alpha = m_timer.GetPercent(true) * -1 + 1;
+
+            foreach (var _renderer in m_renderers)
+            {
+                var color = _renderer.material.color;
+
+                color.a = alpha;
+                _renderer.material.color = color;
+            }
         }
     }
 }

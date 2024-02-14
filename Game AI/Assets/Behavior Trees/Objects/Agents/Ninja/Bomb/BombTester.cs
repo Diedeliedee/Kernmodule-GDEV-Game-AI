@@ -1,14 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BombTester : MonoBehaviour
+namespace GameAI.BehaviorSystem
 {
-    [SerializeField] private SmokebombHandler m_bomb;
-
-    private void Update()
+    public class BombTester : MonoBehaviour
     {
-        if (!Input.GetKeyDown(KeyCode.Space)) return;
-        m_bomb.ThrowBombTo(transform.position);
+        [SerializeField] private SmokebombHandler m_bomb;
+
+        private void Update()
+        {
+            if (!Input.GetKeyDown(KeyCode.Space)) return;
+            m_bomb.ThrowBombTo(transform.position);
+        }
     }
 }

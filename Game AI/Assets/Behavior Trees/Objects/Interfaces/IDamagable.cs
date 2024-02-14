@@ -1,4 +1,7 @@
-public interface IDamagable
+namespace GameAI.BehaviorSystem
 {
-    public void Damage(int _damage);
+    public interface IDamagable
+    {
+        public void Damage(int _damage);
+    }
 }

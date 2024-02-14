@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public interface IHidingCover
+namespace GameAI.BehaviorSystem
 {
-    public Vector3 position { get; }
+    public interface IHidingCover
+    {
+        public Vector3 position { get; }
 
-    public Vector3 GetHidingPosition(Vector3 _from, out Vector3 _normal);
+        public Vector3 GetHidingPosition(Vector3 _from, out Vector3 _normal);
+    }
 }

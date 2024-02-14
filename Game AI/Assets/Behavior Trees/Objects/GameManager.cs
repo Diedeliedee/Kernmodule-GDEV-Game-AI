@@ -1,28 +1,31 @@
 using Joeri.Tools.Structure;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+namespace GameAI.BehaviorSystem
 {
-    public State state { get; private set; }
-
-    private void Awake()
+    public class GameManager : Singleton<GameManager>
     {
-        instance = this;
-    }
+        public State state { get; private set; }
 
-    public void LoadScene(string _sceneName)
-    {
-        SceneManager.LoadScene(_sceneName);
-    }
+        private void Awake()
+        {
+            instance = this;
+        }
 
-    public void EndGame()
-    {
-        state = State.Over;
-    }
+        public void LoadScene(string _sceneName)
+        {
+            SceneManager.LoadScene(_sceneName);
+        }
 
-    public enum State
-    {
-        Running,
-        Over
+        public void EndGame()
+        {
+            state = State.Over;
+        }
+
+        public enum State
+        {
+            Running,
+            Over
+        }
     }
 }

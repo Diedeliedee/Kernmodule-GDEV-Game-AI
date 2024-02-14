@@ -2,32 +2,35 @@ using Joeri.Tools.Gameify;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerHealth : MonoBehaviour, IDamagable
+namespace GameAI.BehaviorSystem
 {
-    [SerializeField] private Health m_health;
-    [Space]
-    [SerializeField] private UnityEvent<int, int> m_onDamage;
-    [SerializeField] private UnityEvent m_onDeath;
-
-    private Animator m_animator = null;
-
-    private void Awake()
+    public class PlayerHealth : MonoBehaviour, IDamagable
     {
-        m_health.onHealthChange += (h, m) => m_onDamage.Invoke(h, m);
-        m_health.onDeath += () => m_onDeath.Invoke();
+        [SerializeField] private Health m_health;
+        [Space]
+        [SerializeField] private UnityEvent<int, int> m_onDamage;
+        [SerializeField] private UnityEvent m_onDeath;
 
-        m_animator = GetComponent<Animator>();
-    }
+        private Animator m_animator = null;
 
-    private void OnDestroy()
-    {
-        //  Not sure if this is techincally needed, but just to be safe.
-        m_health.onHealthChange = null;
-        m_health.onDeath = null;
-    }
+        private void Awake()
+        {
+            m_health.onHealthChange += (h, m) => m_onDamage.Invoke(h, m);
+            m_health.onDeath += () => m_onDeath.Invoke();
 
-    public void Damage(int _damage)
-    {
-        m_health.ChangeHealth(-_damage);
+            m_animator = GetComponent<Animator>();
+        }
+
+        private void OnDestroy()
+        {
+            //  Not sure if this is techincally needed, but just to be safe.
+            m_health.onHealthChange = null;
+            m_health.onDeath = null;
+        }
+
+        public void Damage(int _damage)
+        {
+            m_health.ChangeHealth(-_damage);
+        }
     }
 }

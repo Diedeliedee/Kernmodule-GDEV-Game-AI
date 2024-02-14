@@ -1,39 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraController : MonoBehaviour
+namespace GameAI.Pathfinding
 {
-    public float moveSpeed = 1;
-    public float yPos = 15;
-    public float zoomSpeed = 2;
-    public float lerpSpeed = 1;
-    private Vector3 targetPos;
-    // Start is called before the first frame update
-    void Start()
+    public class CameraController : MonoBehaviour
     {
-        targetPos = new Vector3(0, yPos, 0);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        float vert = Input.GetAxisRaw("Vertical");
-        float hor = Input.GetAxisRaw("Horizontal");
-
-        if(vert != 0 || hor != 0)
+        public float moveSpeed = 1;
+        public float yPos = 15;
+        public float zoomSpeed = 2;
+        public float lerpSpeed = 1;
+        private Vector3 targetPos;
+        // Start is called before the first frame update
+        void Start()
         {
-            targetPos += (Vector3.forward * vert + hor * Vector3.right).normalized * moveSpeed;
+            targetPos = new Vector3(0, yPos, 0);
         }
 
-        float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
-        if(scroll != 0)
+        // Update is called once per frame
+        void Update()
         {
-            yPos += -Mathf.Sign(scroll) * zoomSpeed;
-            yPos = Mathf.Clamp(yPos, 1, 100);
-            targetPos = new Vector3(targetPos.x, yPos, targetPos.z);
-        }
+            float vert = Input.GetAxisRaw("Vertical");
+            float hor = Input.GetAxisRaw("Horizontal");
 
-        transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed * Time.deltaTime);
+            if (vert != 0 || hor != 0)
+            {
+                targetPos += (Vector3.forward * vert + hor * Vector3.right).normalized * moveSpeed;
+            }
+
+            float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
+            if (scroll != 0)
+            {
+                yPos += -Mathf.Sign(scroll) * zoomSpeed;
+                yPos = Mathf.Clamp(yPos, 1, 100);
+                targetPos = new Vector3(targetPos.x, yPos, targetPos.z);
+            }
+
+            transform.position = Vector3.Lerp(transform.position, targetPos, lerpSpeed * Time.deltaTime);
+        }
     }
 }

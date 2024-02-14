@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e5d0f10a04c704fa1a531d8865478d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_velocity: 15
-  m_cooldown: 10
+  m_velocity: 30
+  m_cooldown: 1
   m_minThrowAngle: 30
   m_bombObject: {fileID: 4178113837157153711, guid: 08963c6a976c74a449a9797e3a565061,
     type: 3}

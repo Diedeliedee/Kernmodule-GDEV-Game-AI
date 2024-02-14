@@ -1,8 +1,11 @@
-﻿public interface ISmokeInteractable
+﻿namespace GameAI.BehaviorSystem
 {
-    public void OnSmokeEnter();
+    public interface ISmokeInteractable
+    {
+        public void OnSmokeEnter();
 
-    public void OnSmokeStay(float _smokeDensity);
+        public void OnSmokeStay(float _smokeDensity);
 
-    public void OnSmokeExit();
+        public void OnSmokeExit();
+    }
 }

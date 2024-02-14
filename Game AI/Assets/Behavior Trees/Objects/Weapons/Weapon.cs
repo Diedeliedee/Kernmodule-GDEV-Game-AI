@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Weapon
+namespace GameAI.BehaviorSystem
 {
-    //  THIS IS A TOP OF THE LINE MELEE WEAPON!!
+    public class Weapon
+    {
+        //  THIS IS A TOP OF THE LINE MELEE WEAPON!!
+    }
 }

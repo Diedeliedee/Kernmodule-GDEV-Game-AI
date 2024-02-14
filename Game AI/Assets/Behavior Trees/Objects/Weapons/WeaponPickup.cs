@@ -1,20 +1,23 @@
 using UnityEngine;
 
-public class WeaponPickup : MonoBehaviour
+namespace GameAI.BehaviorSystem
 {
-    [SerializeField] private Transform m_pivot;
-    [SerializeField] private float m_speed = 90f;
-
-    private Weapon m_weapon = new Weapon();
-
-    private void Update()
+    public class WeaponPickup : MonoBehaviour
     {
-        m_pivot.Rotate(0f, 90f * Time.deltaTime, 0f, Space.Self);
-    }
+        [SerializeField] private Transform m_pivot;
+        [SerializeField] private float m_speed = 90f;
 
-    public Weapon Pickup()
-    {
-        Destroy(gameObject);
-        return m_weapon;
+        private Weapon m_weapon = new Weapon();
+
+        private void Update()
+        {
+            m_pivot.Rotate(0f, 90f * Time.deltaTime, 0f, Space.Self);
+        }
+
+        public Weapon Pickup()
+        {
+            Destroy(gameObject);
+            return m_weapon;
+        }
     }
 }

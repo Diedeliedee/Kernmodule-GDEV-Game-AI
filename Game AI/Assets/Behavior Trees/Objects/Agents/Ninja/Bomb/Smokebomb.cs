@@ -1,25 +1,28 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class Smokebomb : MonoBehaviour
+namespace GameAI.BehaviorSystem
 {
-    [SerializeField] private GameObject m_smokeCloud;
-
-    private Rigidbody m_rb = null;
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class Smokebomb : MonoBehaviour
     {
-        m_rb = GetComponent<Rigidbody>();
-    }
+        [SerializeField] private GameObject m_smokeCloud;
 
-    public void Launch(Vector3 _velocity)
-    {
-        m_rb.velocity = _velocity;
-    }
+        private Rigidbody m_rb = null;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Destroy(gameObject);
-        Instantiate(m_smokeCloud, transform.position, Quaternion.identity);
+        private void Awake()
+        {
+            m_rb = GetComponent<Rigidbody>();
+        }
+
+        public void Launch(Vector3 _velocity)
+        {
+            m_rb.velocity = _velocity;
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Destroy(gameObject);
+            Instantiate(m_smokeCloud, transform.position, Quaternion.identity);
+        }
     }
 }
