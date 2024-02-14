@@ -28,7 +28,7 @@ public class ColliderOcclusionCheck : MonoBehaviour
             _rayEndPoint = transform.position + direction * m_distance;
             return false;
         }
-        if (Vector3.Angle(transform.forward, direction) > m_angle)
+        if (Vector3.Angle(transform.forward, direction) > m_halfAngle)
         {
             _rayEndPoint = target;
             return false;

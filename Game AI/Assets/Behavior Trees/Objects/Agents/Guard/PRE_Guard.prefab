@@ -1016,18 +1016,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 707439ce59448b245a2e0044320b3363, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 13af24b1d3453fb4c99d81cbddfe09c0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 3
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 10
+  MinDistance: 1.5
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1198,6 +1198,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Footsteps
       objectReference: {fileID: 0}
+    - target: {fileID: 5063780199119972012, guid: e202b484b5f4b284e89c9a865581dac0,
+        type: 3}
+      propertyPath: m_Pitch
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6470990932277238604, guid: e202b484b5f4b284e89c9a865581dac0,
         type: 3}
       propertyPath: m_audioClip
@@ -1253,11 +1258,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8832294050860815345, guid: e202b484b5f4b284e89c9a865581dac0,
-        type: 3}
-      propertyPath: m_onStep.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 8300000, guid: 9e1fbf2469f85ff41a67c344da676265, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
