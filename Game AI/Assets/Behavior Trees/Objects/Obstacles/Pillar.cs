@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Joeri.Tools.Utilities;
+using UnityEngine;
 
 public class Pillar : MonoBehaviour, IHidingCover
 {
@@ -13,7 +14,7 @@ public class Pillar : MonoBehaviour, IHidingCover
 
     public Vector3 GetHidingPosition(Vector3 _from, out Vector3 _normal)
     {
-        _normal = (transform.position - _from).normalized;
+        _normal = (transform.position.Planar() - _from.Planar()).normalized.Cubular();
         var pos = transform.position + _normal * m_collider.radius;
         pos.y = 0;
         return pos;
