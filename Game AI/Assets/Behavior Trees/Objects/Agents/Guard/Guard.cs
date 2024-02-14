@@ -50,7 +50,6 @@ public class Guard : Agent, ISmokeInteractable
 
     protected override BehaviorTree CreateTree(FittedBlackboard _blackboard)
     {
-        //  JOERI, keep in mind that memory classes might no be necessary if a large portion of the tree is doable with actions.
         _blackboard.Add(m_threatPerception);
 
         //  Constructing the branch run when the guard has a weapon and chases the player.

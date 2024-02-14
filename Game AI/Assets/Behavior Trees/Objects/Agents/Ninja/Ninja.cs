@@ -1,9 +1,7 @@
 ﻿using Joeri.Tools.AI.BehaviorTree;
-using Joeri.Tools.Utilities;
 using Joeri.Tools.Patterns;
-using System.Collections.Generic;
+using Joeri.Tools.Utilities;
 using UnityEngine;
-using System.Linq;
 
 public class Ninja : Agent
 {
@@ -41,10 +39,12 @@ public class Ninja : Agent
 
     protected override BehaviorTree CreateTree(FittedBlackboard _blackboard)
     {
+        //  Branch for when all is well and the guard is unaware of the team.
         var followBranch = new Sequence(
             new Action(SetPlayerFollowPosition, "Setting target to Player perimeter."),
             new NavigateToTarget("Following player."));
 
+        //  Branch for when the guard has spotted the player.
         var hideBranch = new NonFailable(
             new Routine(
                 new Action(() => m_chosenHidingSpot = GetOptimalHidingSpot(), "Choosing optimal hiding spot."),
@@ -54,6 +54,7 @@ public class Ninja : Agent
                     new PrioritizeRunning(
                         new Condition(IsGuardInRange, "Can I still see the guard?")))));
 
+        //  Branch for when it's time to take action, and throw a smokebomb.
         var throwBranch = new NonFailable(
             new Sequence(
                 new Action(() => m_targetMemory.SetTarget(m_guard.transform.position), "Setting Target to guard!"),
@@ -63,6 +64,7 @@ public class Ninja : Agent
                 new Action(() => m_bomb.ThrowBombTo(m_guard.transform.position), "Throwing bomb!"),
                 new Action(() => m_sawGuardAttack = false, "Forgetting Guard's attack..")));
 
+        //  Setup of general tree.
         return new BehaviorTree(
             new Selector(
                 new Sequence(
