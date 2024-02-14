@@ -33,7 +33,7 @@ namespace Joeri.Tools.Gameify
             return health;
         }
     
-        public int AddHealth(int health)
+        public int ChangeHealth(int health)
         {
             return SetHealth(m_health + health);
         }

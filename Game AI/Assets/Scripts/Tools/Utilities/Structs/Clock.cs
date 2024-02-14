@@ -14,7 +14,7 @@ namespace Joeri.Tools
         /// </summary>
         public Clock(Vector3 position, float radius, float handAngle)
         {
-            var handDirection = Vectors.AngleToVector(handAngle);
+            var handDirection = handAngle.ToDirection();
 
             //  Using the Pointer struct for the clock handle.
             pointer = new Pointer(position, new Vector3(position.x + handDirection.x, position.y, position.z + handDirection.y), radius);

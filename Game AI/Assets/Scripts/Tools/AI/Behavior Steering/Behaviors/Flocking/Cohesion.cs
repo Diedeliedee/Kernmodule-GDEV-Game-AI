@@ -42,7 +42,7 @@ namespace Joeri.Tools.AI.Steering
             _peerBoids = FilterToNearbyBoids(_position, m_sqrRadius, _peerBoids);
             foreach (var peer in _peerBoids)
             {
-                Gizmos.color = new Color(1f, 1f, 1f, Util.Reverse01(Vector3.Distance(_position, peer.position) / m_radius) * 0.5f);
+                Gizmos.color = new Color(1f, 1f, 1f, Util.OneMinus(Vector3.Distance(_position, peer.position) / m_radius) * 0.5f);
                 Gizmos.DrawLine(_position, peer.position);
             }
         }

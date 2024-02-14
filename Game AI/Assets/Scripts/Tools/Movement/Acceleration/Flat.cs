@@ -53,8 +53,8 @@ namespace Joeri.Tools.Movement
             /// </summary>
             public void Draw(Vector3 position, Color velocityColor, Color steeringColor, float opacity = 1f)
             {
-                var desiredRay = Vectors.FlatToVector(desiredVelocity);
-                var velocityRay = Vectors.FlatToVector(velocity);
+                var desiredRay = desiredVelocity.Cubular();
+                var velocityRay = velocity.Cubular();
 
                 GizmoTools.DrawRay(position, desiredRay, steeringColor, opacity);
                 GizmoTools.DrawRay(position, velocityRay, velocityColor, opacity);

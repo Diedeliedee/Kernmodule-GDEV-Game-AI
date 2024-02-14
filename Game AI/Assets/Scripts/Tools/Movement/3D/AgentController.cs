@@ -33,7 +33,7 @@ namespace Joeri.Tools.Movement.ThreeDee
 
         public void ApplyBehaviorVelocity(float deltaTime)
         {
-            var context = new Context(deltaTime, speed, Vectors.VectorToFlat(controller.transform.position), flatVelocity);
+            var context = new Context(deltaTime, speed, controller.transform.position.Planar(), flatVelocity);
             var desiredVelocity = m_behaviorHandler.GetDesiredVelocity(context);
 
             ApplyDesiredVelocity(desiredVelocity, deltaTime);
