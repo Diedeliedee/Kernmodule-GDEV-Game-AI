@@ -8,6 +8,13 @@ public class ColliderOcclusionCheck : MonoBehaviour
     [SerializeField] private float m_distance = 10f;
     [SerializeField] private LayerMask m_occluders = default;
 
+    private float m_halfAngle = 0f;
+
+    private void Start()
+    {
+        m_halfAngle = m_angle / 2;
+    }
+
     public bool CanReachTarget(out Vector3 _rayEndPoint)
     {
         var target = m_target.ClosestPoint(transform.position);
@@ -16,14 +23,14 @@ public class ColliderOcclusionCheck : MonoBehaviour
 
         _rayEndPoint = transform.position + direction * distance;
 
-        if (Vector3.Angle(transform.forward, direction) > m_angle)
-        {
-            _rayEndPoint = transform.position;
-            return false;
-        }
         if (distance > m_distance)
         {
             _rayEndPoint = transform.position + direction * m_distance;
+            return false;
+        }
+        if (Vector3.Angle(transform.forward, direction) > m_angle)
+        {
+            _rayEndPoint = target;
             return false;
         }
 
