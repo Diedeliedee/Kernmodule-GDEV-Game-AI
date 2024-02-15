@@ -4,8 +4,8 @@ namespace Joeri.Tools.AI.BehaviorTree
 {
     public class Selector : CompositeNode
     {
-        private int m_index = 0;
-        private int m_lastIndex = 0;
+        private int m_index = -1;
+        private int m_lastIndex = -1;
 
         public Selector(params Node[] _children) : base(_children) { }
 
@@ -32,22 +32,24 @@ namespace Joeri.Tools.AI.BehaviorTree
             }
 
             //  If no children are running, none can be selected and the selector has failed.
-            m_index = 0;
-            m_lastIndex = 0;
+            m_index = -1;
+            m_lastIndex = -1;
             return State.Failure;
         }
 
         private void RegisterIndex()
         {
-            if (m_index < m_lastIndex) children[m_lastIndex].OnAbort();
+            if (m_lastIndex > 0 && m_index != m_lastIndex) children[m_lastIndex].OnAbort();
             m_lastIndex = m_index;
         }
 
         public override void OnAbort()
         {
+            if (m_index < 0) return;
+
             children[m_index].OnAbort();
-            m_index = 0;
-            m_lastIndex = 0;
+            m_index = -1;
+            m_lastIndex = -1;
         }
 
         public override void OnDraw(Vector3 _center)
